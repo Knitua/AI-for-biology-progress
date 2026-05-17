@@ -1,20 +1,20 @@
 # 更新记录与可视化
 
-这个目录用于记录 `To teacher` 视图下项目文件夹和会议文件的更新时间。
+这个目录用于记录 `AI-for-biology-progress` 视图下项目文件夹和会议总结的更新时间。
 
 ## 文件说明
 
 - `update_status.csv`：每个项目文件夹和会议总结 `.minutes.md` 的当前状态；不记录原始会议转写 `.txt`。
 - `update_history.csv`：每次更新、跳过或初始化的历史记录。
 - `index.html`：可直接打开的可视化页面。
-- `refresh_paint.py`：扫描 `To teacher` 并刷新状态表和可视化页面。
+- `refresh_paint.py`：扫描当前仓库并刷新状态表和可视化页面。
 
 ## 使用
 
 从 Panel 根目录运行：
 
 ```powershell
-python "To teacher\paint\refresh_paint.py"
+python "paint\refresh_paint.py"
 ```
 
 更新项目时的规则：

@@ -16,7 +16,7 @@
 
 ## 2. 当前数据情况
 
-本地资料位于 `To teacher\01AI-BAT`，主要包括：
+本地资料位于 `01AI-BAT`，主要包括：
 
 - 代表性蝙蝠基因组论文 PDF。
 - `Bat1K.docx`，其中记录了 Bat1K 官网和 NCBI BioProject 入口。

@@ -39,7 +39,7 @@ python "paint\refresh_paint.py"
 
 ### 新建项目
 
-1. 把材料放入 `To teacher` 下的新项目文件夹，或先准备项目名称。
+1. 把材料放入 `AI-for-biology-progress` 下的新项目文件夹，或先准备项目名称。
 2. 使用 [Project_Prompt.md](./Update_prompt/Project_Prompt.md) 的“新建项目快速版”。
 3. 同步检查：
    - [项目列表.md](./项目列表.md)

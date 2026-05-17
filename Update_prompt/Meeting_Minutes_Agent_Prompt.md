@@ -12,7 +12,7 @@
 
 输入材料：
 【在这里填写会议转写稿路径，例如：
-To teacher\Meet_content\2026-05-17-级联反应路径规划讨论.txt
+Meet_content\2026-05-17-级联反应路径规划讨论.txt
 】
 
 请严格按以下要求执行：
@@ -96,7 +96,7 @@ To teacher\Meet_content\2026-05-17-级联反应路径规划讨论.txt
 7. 保存和更新记录。
    - 根据会议日期和主题保存为 `YYYY-MM-DD-会议主题.minutes.md`，放在原转写稿旁边。
    - 原始转写稿也建议使用 `YYYY-MM-DD-会议主题.txt` 命名。
-   - 生成或更新会议纪要后，刷新 `To teacher\paint\update_status.csv`、`To teacher\paint\update_history.csv` 和 `To teacher\paint\index.html`，只记录会议纪要 `.minutes.md` 的最后更新时间；原始转写 `.txt` 不进入状态表。
+   - 生成或更新会议纪要后，刷新 `paint\update_status.csv`、`paint\update_history.csv` 和 `paint\index.html`，只记录会议纪要 `.minutes.md` 的最后更新时间；原始转写 `.txt` 不进入状态表。
 ```
 
 ## 快速使用版
@@ -112,7 +112,7 @@ To teacher\Meet_content\2026-05-17-级联反应路径规划讨论.txt
 3. 输出以下部分：一句话概括、核心结论、已形成的共识、仍在讨论的问题、可行方向、暂不推荐的方向、下一步行动、关键词和术语修正、总结。
 4. 不要复述流水账，要提炼讨论主线和项目判断。
 5. 不确定内容标注“疑似/需确认”，不要编造。
-6. 保存后刷新 `To teacher\paint` 下的更新时间记录和可视化页面。
+6. 保存后刷新 `paint` 下的更新时间记录和可视化页面。
 ```
 
 ## 输出模板

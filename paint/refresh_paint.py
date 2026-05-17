@@ -52,9 +52,10 @@ def read_csv(path: Path) -> list[dict[str, str]]:
 
 
 def normalize_relative_path(path_text: str) -> str:
-    prefix = "To teacher\\"
-    if path_text.startswith(prefix):
-        return path_text[len(prefix) :]
+    legacy_prefix = "To " + "teacher\\"
+    for prefix in (legacy_prefix, "AI-for-biology-progress\\"):
+        if path_text.startswith(prefix):
+            return path_text[len(prefix) :]
     return path_text
 
 
@@ -205,7 +206,7 @@ def render_html(status_rows: list[dict[str, str]], history_rows: list[dict[str, 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>To teacher 更新记录</title>
+  <title>AI-for-biology-progress 更新记录</title>
   <style>
     body {{ font-family: Arial, "Microsoft YaHei", sans-serif; margin: 0; color: #17212b; background: #f6f7f9; }}
     main {{ max-width: 1180px; margin: 0 auto; padding: 28px 20px 44px; }}
@@ -230,7 +231,7 @@ def render_html(status_rows: list[dict[str, str]], history_rows: list[dict[str, 
 </head>
 <body>
   <main>
-  <h1>To teacher 更新记录</h1>
+  <h1>AI-for-biology-progress 更新记录</h1>
   <div class="meta">刷新时间：{html.escape(now)}</div>
 
   <div class="cards">
