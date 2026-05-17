@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>01AI-BAT</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <strong>AI for Biology Progress</strong>
+        <span>生物探索团队项目进展</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="index.html">总览</a>
+<a class="active" href="projects.html">项目进展</a>
+<a href="meetings.html">会议记录</a>
+<a href="updates.html">更新时间</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+
+    <section class="hero">
+      <p class="eyebrow">项目详情</p>
+      <h1>01AI-BAT</h1>
+      <p class="lede">从 Bat1K 和比较基因组资源中筛选免疫、病毒耐受、炎症调控和 DNA 修复相关候选基因，适合作为生物机制探索主线。</p>
+      <div class="meta-line">刷新时间：2026-05-17T22:16:41+08:00</div>
+    </section>
+
+    <section class="section project-detail">
+      <div class="content-stack">
+
+            <section class="md-section">
+              <h2>基本信息</h2>
+              <div class="table-wrap"><table><thead><tr><th>字段</th><th>内容</th></tr></thead><tbody><tr><td>项目方向</td><td>蝙蝠基因组、病毒耐受、免疫调控、长寿与适应性进化</td></tr><tr><td>当前状态</td><td>已完成物种资源统计和第一版深度学习分析方案</td></tr><tr><td>负责人/参与者</td><td>待填写</td></tr><tr><td>更新时间</td><td>待填写</td></tr></tbody></table></div>
+            </section>
+
+            <section class="md-section">
+              <h2>研究问题</h2>
+              <p>本项目围绕蝙蝠为什么能够同时具备飞行、长寿、病毒耐受和相对低炎症损伤等特殊表型展开。核心问题是从 Bat1K、比较基因组和免疫适应证据中，筛选出适合团队继续分析的候选基因、通路和物种组合。</p>
+<p>第一阶段建议聚焦 <strong>免疫与病毒耐受相关基因</strong>：例如干扰素通路、ISG15、APOBEC、TLR、RIG-I/MDA5、STING/cGAS、NLRP 炎症小体、DNA 损伤修复等。这些方向与蝙蝠低炎症反应、病毒耐受和疾病抵抗密切相关，也更适合形成可执行的序列表征和候选基因筛选任务。</p>
+            </section>
+
+            <section class="md-section">
+              <h2>研究意义</h2>
+              <p>蝙蝠具有飞行、长寿、病毒耐受和低炎症损伤等清晰异常表型，同时具备大规模基因组资源和明确的医学免疫学价值。本项目将“生物现象、公开组学资源、候选机制、计算分析路线”连接起来，形成可推进的机制探索任务。</p>
+<p>当前进展已经从文献收集转向数据状态判断和第一版分析路线收敛。第一阶段不从 TB 级原始 reads 开始，而是优先利用已组装、已注释的 genome/CDS/protein 数据开展小规模试点。</p>
+            </section>
+
+            <section class="md-section">
+              <h2>项目目标</h2>
+              <ul>
+<li>建立 10-20 个代表性蝙蝠和非蝙蝠哺乳动物对照物种的小规模试点集。</li>
+<li>从已有文献和数据库中整理免疫、病毒耐受、炎症调控和 DNA 损伤修复候选基因集。</li>
+<li>基于已注释 protein/CDS 序列开展序列表征、聚类、分类或异常检测。</li>
+<li>输出蝙蝠特异候选基因排序表、物种/基因 embedding 可视化和后续扩大到 Bat1K 更多物种的建议。</li>
+</ul>
+            </section>
+
+            <section class="md-section">
+              <h2>技术路线</h2>
+              <ol>
+<li>以 Bat1K 官网和 NCBI BioProject <code>PRJNA489245</code> 为主要数据入口，优先使用已组装和注释数据。</li>
+<li>选择测序、组装、注释均完成的物种；当前可用物种状态表覆盖 1469 个物种/条目，其中 91 个已完成测序、组装和注释。</li>
+<li>第一阶段选取 6-12 个蝙蝠物种和 3-8 个非蝙蝠哺乳动物对照，避免一开始处理 1.73 TB 级 SRA 原始数据。</li>
+<li>构建免疫与病毒耐受候选基因清单，并提取各物种 ortholog 的 protein/CDS 序列。</li>
+<li>使用 ESM2 进行蛋白序列表征，必要时加入 DNABERT-2 或 Nucleotide Transformer 做 CDS/调控区辅助分析。</li>
+<li>通过 PCA/UMAP、聚类、分类模型、异常检测和功能富集，筛选蝙蝠中特异偏离或值得进一步验证的候选基因。</li>
+</ol>
+            </section>
+
+            <section class="md-section">
+              <h2>当前进展</h2>
+              <p>本项目已经形成比较完整的前期基础：</p>
+<ul>
+<li>已建立 Bat1K 官网和 NCBI BioProject 数据入口。</li>
+<li>已完成蝙蝠物种测序状态统计：1469 个条目、158 个测序完成、126 个组装完成、91 个注释完成且三项均完成。</li>
+<li>已完成第一版深度学习分析方案，明确第一阶段不从原始 reads 起步，而是从已注释 protein/CDS 数据切入。</li>
+<li>已初步确定推荐主题：基于预训练基因组/蛋白模型，对蝙蝠免疫和病毒耐受相关基因进行序列表征与候选基因筛选。</li>
+</ul>
+<p>AI-BAT 主线聚焦蝙蝠基因组、免疫调控和病毒耐受机制，不与老药新用的药物筛选结果混合。</p>
+            </section>
+
+      </div>
+      <aside class="side-panel">
+        <div class="panel">
+          <h2>项目定位</h2>
+          <div class="fact-row"><div class="fact-label">项目类别</div><div class="fact-value">重点项目</div></div>
+<div class="fact-row"><div class="fact-label">成熟度</div><div class="fact-value">模型/计算推进中</div></div>
+<div class="fact-row"><div class="fact-label">研究方向</div><div class="fact-value">蝙蝠免疫与病毒耐受</div></div>
+<div class="fact-row"><div class="fact-label">材料最后修改</div><div class="fact-value">2026-05-17T20:20:50+08:00</div></div>
+<div class="fact-row"><div class="fact-label">内容最后更新</div><div class="fact-value">2026-05-17T21:06:36+08:00</div></div>
+<div class="fact-row"><div class="fact-label">刷新状态</div><div class="fact-value">当前</div></div>
+        </div>
+        <div class="panel">
+          <h2>关键数字</h2>
+          <ul class="plain-list"><li>1469 个物种状态条目</li><li>91 个完成测序/组装/注释</li><li>第一版 ESM2 试点路线</li></ul>
+        </div>
+        <div class="panel">
+          <h2>下一步与边界</h2>
+          <p><strong>下一步：</strong>收敛 10-20 个试点物种与候选免疫基因清单，跑通 protein/CDS 表征和可视化。</p>
+          <p><strong>边界：</strong>不要从 TB 级原始 reads 起步；先用已注释 genome/CDS/protein 数据做小规模试点。</p>
+          <p><a class="text-link" href="../01AI-BAT/README.md">项目源文档</a></p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section project-events" id="project-events">
+      <div class="section-head">
+        <div>
+          <h2>项目日程</h2>
+          <p>仅显示 01AI-BAT 的会议和里程碑；这些节点来自首页项目总日历的同一组记录。</p>
+        </div>
+        <a class="text-link" href="index.html#project-calendar">返回总日历</a>
+      </div>
+
+    <div class="calendar-panel compact-calendar" id="project-local-calendar">
+
+      <div class="calendar-head">
+        <h2>本项目日历</h2>
+        <p>当前项目的会议、里程碑和计划节点</p>
+      </div>
+
+      <div class="calendar-summary">
+        <div class="calendar-summary-item"><strong>1</strong><span>日程节点</span></div>
+        <div class="calendar-summary-item"><strong>1</strong><span>已完成节点</span></div>
+        <div class="calendar-summary-item"><strong>0</strong><span>计划中节点</span></div>
+        <div class="calendar-summary-item"><strong>1</strong><span>涉及项目；下一节点：暂无后续计划节点</span></div>
+      </div>
+      <div class="calendar-legend">
+        <span class="legend-item"><span class="legend-dot meeting"></span>会议</span>
+        <span class="legend-item"><span class="legend-dot done"></span>已完成节点</span>
+        <span class="legend-item"><span class="legend-dot planned"></span>计划节点</span>
+      </div>
+      <div class="calendar-months">
+
+    <section class="calendar-month">
+      <div class="calendar-month-title">
+        <h3>2026年5月</h3>
+        <span>1 个节点</span>
+      </div>
+      <div class="calendar-grid">
+        <div class="calendar-weekday">周一</div><div class="calendar-weekday">周二</div><div class="calendar-weekday">周三</div><div class="calendar-weekday">周四</div><div class="calendar-weekday">周五</div><div class="calendar-weekday">周六</div><div class="calendar-weekday">周日</div>
+        <div class="calendar-day empty" aria-hidden="true"></div><div class="calendar-day empty" aria-hidden="true"></div><div class="calendar-day empty" aria-hidden="true"></div><div class="calendar-day empty" aria-hidden="true"></div>
+            <div class="calendar-day no-events">
+              <div class="calendar-date">1<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">2<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">3<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">4<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">5<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">6<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">7<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">8<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">9<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">10<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">11<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">12<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">13<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">14<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">15<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">16<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day has-events today">
+              <div class="calendar-date">17<span>1 个节点</span></div>
+              <div class="calendar-events">
+    <a class="calendar-event done milestone project-p01" href="project-01.html#event-evt-2026-05-17-bat-plan" title="2026-05-17 BAT 试点路线收敛，01AI-BAT，里程碑，已完成" aria-label="2026-05-17 BAT 试点路线收敛，01AI-BAT，里程碑，已完成">
+      <span class="calendar-event-content">
+        <span class="calendar-event-meta">
+          <span class="project-pill">P01</span>
+          <span>里程碑 · 已完成</span>
+        </span>
+        <strong>BAT 试点路线收敛</strong>
+        <span class="event-project-title">01AI-BAT</span>
+      </span>
+    </a>
+    </div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">18<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">19<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">20<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">21<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">22<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">23<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">24<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">25<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">26<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">27<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">28<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">29<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">30<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">31<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+      </div>
+    </section>
+
+      </div>
+
+
+    </div>
+
+      <div class="event-sections">
+        <section class="event-group" id="meeting-nodes">
+          <h3>会议节点</h3>
+          <div class="empty">暂无会议节点。</div>
+        </section>
+        <section class="event-group" id="milestone-nodes">
+          <h3>里程碑区域</h3>
+
+    <article class="event-card done milestone" id="event-evt-2026-05-17-bat-plan">
+      <div class="event-meta">
+        <span>2026-05-17</span>
+        <span>里程碑</span>
+        <span>已完成</span>
+      </div>
+      <h4>BAT 试点路线收敛</h4>
+      <p>完成蝙蝠物种资源统计和第一版 protein/CDS 序列表征试点路线。</p>
+      <div class="event-links">
+        <a href="index.html#project-calendar">首页项目日历</a>
+        <a href="#project-local-calendar">本项目日历</a>
+        <a href="../01AI-BAT/README.md">来源记录</a>
+      </div>
+    </article>
+
+        </section>
+      </div>
+    </section>
+
+
+  </main>
+</body>
+</html>

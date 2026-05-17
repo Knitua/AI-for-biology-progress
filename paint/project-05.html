@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>05AI-级联催化逆合成</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <strong>AI for Biology Progress</strong>
+        <span>生物探索团队项目进展</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="index.html">总览</a>
+<a class="active" href="projects.html">项目进展</a>
+<a href="meetings.html">会议记录</a>
+<a href="updates.html">更新时间</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+
+    <section class="hero">
+      <p class="eyebrow">项目详情</p>
+      <h1>05AI-级联催化逆合成</h1>
+      <p class="lede">已形成 Cascade Dataset v4 和质量分层体系，支撑复杂文献知识结构化与后续路线评估任务。</p>
+      <div class="meta-line">刷新时间：2026-05-17T22:16:41+08:00</div>
+    </section>
+
+    <section class="section project-detail">
+      <div class="content-stack">
+
+            <section class="md-section">
+              <h2>基本信息</h2>
+              <div class="table-wrap"><table><thead><tr><th>字段</th><th>内容</th></tr></thead><tbody><tr><td>项目方向</td><td>生物催化/化学酶级联反应数据库、反应步骤结构化、催化剂与条件建模</td></tr><tr><td>当前状态</td><td>已形成 Cascade Dataset v4 结构化数据库和数据 release 设计</td></tr><tr><td>负责人/参与者</td><td>待填写</td></tr><tr><td>更新时间</td><td>待填写</td></tr></tbody></table></div>
+            </section>
+
+            <section class="md-section">
+              <h2>研究问题</h2>
+              <p>级联催化和化学酶级联反应常常把多个反应步骤整合在一个合成流程中，但文献中的反应步骤、催化剂、底物范围、条件和产率信息分散在正文、补充材料、表格和图注中，难以直接用于建模和路线分析。</p>
+<p>本项目的核心问题是：如何把这些分散的级联反应信息整理成可审计、可筛选、可建模的结构化数据库，并进一步支持反应路径设计、催化剂选择、条件分析和逆合成相关任务。</p>
+            </section>
+
+            <section class="md-section">
+              <h2>研究意义</h2>
+              <p>这个项目虽然偏化学合成，但与生物方向中的酶催化、生物制造、药物合成路线和候选分子制备都有联系。它将复杂文献知识转化为结构化数据资源，为后续路线分析和建模任务提供基础。</p>
+<p>当前已经形成结构化数据库、质量分层和 release 体系，可支撑“数据资源建设 + 生物催化/化学酶级联任务”的后续推进。</p>
+            </section>
+
+            <section class="md-section">
+              <h2>项目目标</h2>
+              <ul>
+<li>完成 Cascade Dataset v4 的数据结构说明和质量分层描述。</li>
+<li>明确 gold/silver/bronze/quarantine 四级质量体系和默认高质量子集。</li>
+<li>支持后续反应级建模、步骤级 transformation prediction、催化剂选择、条件建模和底物范围分析。</li>
+<li>明确数据规模、字段覆盖、质量控制和可用任务。</li>
+</ul>
+            </section>
+
+            <section class="md-section">
+              <h2>技术路线</h2>
+              <ol>
+<li>从 primary articles 和 supplementary information 中整理级联反应记录。</li>
+<li>将反应结构拆分为 reactions、steps、catalysts、species、substrate_scope 等规范表。</li>
+<li>对记录进行质量分层：gold、silver、bronze、quarantine。</li>
+<li>使用补充材料 enrichment 补齐产率、时间、温度、pH、buffer、solvent 和 substrate-scope 等字段。</li>
+<li>形成 flat CSV、nested JSONL 和 normalized SQLite 三类 release 形态。</li>
+<li>根据任务类型选择筛选策略：严格建模用 gold，默认分析用 gold+silver，分子建模需过滤 SMILES 完整性，工艺变量建模需过滤温度/pH/溶剂/时间完整性。</li>
+</ol>
+            </section>
+
+            <section class="md-section">
+              <h2>当前进展</h2>
+              <p>本项目已经完成较系统的数据集建设和描述：</p>
+<ul>
+<li>全量数据库包含 3810 条 cascade reaction records，来自 2498 个 unique DOI。</li>
+<li>默认高质量 release 包含 3744 条 gold/silver 反应，来自 2464 个 DOI。</li>
+<li>结构化后包含 8609 个 steps、9444 个 catalyst components、21225 个 input/output species records、3458 个 substrate-scope entries。</li>
+<li>质量分层为 2885 条 gold、859 条 silver、60 条 bronze、6 条 quarantine。</li>
+<li>supplementary-information enrichment 已为 886 行增加至少一个新字段，包括 246 个 overall yields、173 个 total reaction-time、376 个 step reaction-time 和 2550 个 substrate-scope entries。</li>
+<li>技术验证显示无 JSON parse-error 和编码 artifact flag；target product names 覆盖 99.90%，starting material names 覆盖 99.79%，starting material SMILES 覆盖 89.13%，target product SMILES 覆盖 80.08%。</li>
+<li>反应步骤以 oxidation、reduction、C-C coupling、racemization、acylation、amination、hydrolysis 等为主；催化剂以 enzyme 为主，也包括 metal catalyst、organocatalyst、whole-cell、photocatalyst 等。</li>
+</ul>
+            </section>
+
+      </div>
+      <aside class="side-panel">
+        <div class="panel">
+          <h2>项目定位</h2>
+          <div class="fact-row"><div class="fact-label">项目类别</div><div class="fact-value">数据资源能力</div></div>
+<div class="fact-row"><div class="fact-label">成熟度</div><div class="fact-value">数据资源成型</div></div>
+<div class="fact-row"><div class="fact-label">研究方向</div><div class="fact-value">级联反应结构化数据库</div></div>
+<div class="fact-row"><div class="fact-label">材料最后修改</div><div class="fact-value">2026-05-17T20:20:50+08:00</div></div>
+<div class="fact-row"><div class="fact-label">内容最后更新</div><div class="fact-value">2026-05-17T21:07:18+08:00</div></div>
+<div class="fact-row"><div class="fact-label">刷新状态</div><div class="fact-value">当前</div></div>
+        </div>
+        <div class="panel">
+          <h2>关键数字</h2>
+          <ul class="plain-list"><li>3810 条 reaction records</li><li>8609 个 steps</li><li>3744 条 gold/silver release</li></ul>
+        </div>
+        <div class="panel">
+          <h2>下一步与边界</h2>
+          <p><strong>下一步：</strong>优先做路线级级联可行性评估，而不是从零训练完整规划模型。</p>
+          <p><strong>边界：</strong>现有数据量不足以支撑强生成式级联规划，短期应聚焦评估器和路线修饰。</p>
+          <p><a class="text-link" href="../05AI-%E7%BA%A7%E8%81%94%E5%82%AC%E5%8C%96%E9%80%86%E5%90%88%E6%88%90/README.md">项目源文档</a></p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section project-events" id="project-events">
+      <div class="section-head">
+        <div>
+          <h2>项目日程</h2>
+          <p>仅显示 05AI-级联催化逆合成 的会议和里程碑；这些节点来自首页项目总日历的同一组记录。</p>
+        </div>
+        <a class="text-link" href="index.html#project-calendar">返回总日历</a>
+      </div>
+
+    <div class="calendar-panel compact-calendar" id="project-local-calendar">
+
+      <div class="calendar-head">
+        <h2>本项目日历</h2>
+        <p>当前项目的会议、里程碑和计划节点</p>
+      </div>
+
+      <div class="calendar-summary">
+        <div class="calendar-summary-item"><strong>3</strong><span>日程节点</span></div>
+        <div class="calendar-summary-item"><strong>2</strong><span>已完成节点</span></div>
+        <div class="calendar-summary-item"><strong>1</strong><span>计划中节点</span></div>
+        <div class="calendar-summary-item"><strong>1</strong><span>涉及项目；下一节点：2026-05-31 · 级联路线评估器小验证</span></div>
+      </div>
+      <div class="calendar-legend">
+        <span class="legend-item"><span class="legend-dot meeting"></span>会议</span>
+        <span class="legend-item"><span class="legend-dot done"></span>已完成节点</span>
+        <span class="legend-item"><span class="legend-dot planned"></span>计划节点</span>
+      </div>
+      <div class="calendar-months">
+
+    <section class="calendar-month">
+      <div class="calendar-month-title">
+        <h3>2026年5月</h3>
+        <span>3 个节点</span>
+      </div>
+      <div class="calendar-grid">
+        <div class="calendar-weekday">周一</div><div class="calendar-weekday">周二</div><div class="calendar-weekday">周三</div><div class="calendar-weekday">周四</div><div class="calendar-weekday">周五</div><div class="calendar-weekday">周六</div><div class="calendar-weekday">周日</div>
+        <div class="calendar-day empty" aria-hidden="true"></div><div class="calendar-day empty" aria-hidden="true"></div><div class="calendar-day empty" aria-hidden="true"></div><div class="calendar-day empty" aria-hidden="true"></div>
+            <div class="calendar-day no-events">
+              <div class="calendar-date">1<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">2<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">3<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">4<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">5<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">6<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">7<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">8<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">9<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">10<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">11<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">12<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">13<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">14<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">15<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">16<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day has-events today">
+              <div class="calendar-date">17<span>2 个节点</span></div>
+              <div class="calendar-events">
+    <a class="calendar-event done meeting project-p05" href="project-05.html#event-evt-2026-05-17-cascade-meeting" title="2026-05-17 级联反应路径规划讨论，05AI-级联催化逆合成，会议，已完成" aria-label="2026-05-17 级联反应路径规划讨论，05AI-级联催化逆合成，会议，已完成">
+      <span class="calendar-event-content">
+        <span class="calendar-event-meta">
+          <span class="project-pill">P05</span>
+          <span>会议 · 已完成</span>
+        </span>
+        <strong>级联反应路径规划讨论</strong>
+        <span class="event-project-title">05AI-级联催化逆合成</span>
+      </span>
+    </a>
+
+    <a class="calendar-event done meeting project-p05" href="project-05.html#event-evt-2026-05-17-molgen-meeting" title="2026-05-17 条件分子生成论文共读，05AI-级联催化逆合成，会议，已完成" aria-label="2026-05-17 条件分子生成论文共读，05AI-级联催化逆合成，会议，已完成">
+      <span class="calendar-event-content">
+        <span class="calendar-event-meta">
+          <span class="project-pill">P05</span>
+          <span>会议 · 已完成</span>
+        </span>
+        <strong>条件分子生成论文共读</strong>
+        <span class="event-project-title">05AI-级联催化逆合成</span>
+      </span>
+    </a>
+    </div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">18<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">19<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">20<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">21<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">22<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">23<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">24<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">25<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">26<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">27<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">28<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">29<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">30<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day has-events">
+              <div class="calendar-date">31<span>1 个节点</span></div>
+              <div class="calendar-events">
+    <a class="calendar-event planned milestone project-p05" href="project-05.html#event-evt-2026-05-31-cascade-evaluator" title="2026-05-31 级联路线评估器小验证，05AI-级联催化逆合成，里程碑，计划中" aria-label="2026-05-31 级联路线评估器小验证，05AI-级联催化逆合成，里程碑，计划中">
+      <span class="calendar-event-content">
+        <span class="calendar-event-meta">
+          <span class="project-pill">P05</span>
+          <span>里程碑 · 计划中</span>
+        </span>
+        <strong>级联路线评估器小验证</strong>
+        <span class="event-project-title">05AI-级联催化逆合成</span>
+      </span>
+    </a>
+    </div>
+            </div>
+
+      </div>
+    </section>
+
+      </div>
+
+
+    </div>
+
+      <div class="event-sections">
+        <section class="event-group" id="meeting-nodes">
+          <h3>会议节点</h3>
+
+    <article class="event-card done meeting" id="event-evt-2026-05-17-cascade-meeting">
+      <div class="event-meta">
+        <span>2026-05-17</span>
+        <span>会议</span>
+        <span>已完成</span>
+      </div>
+      <h4>级联反应路径规划讨论</h4>
+      <p>明确路线级评估与级联修饰优先于从零训练完整级联规划模型。</p>
+      <div class="event-links">
+        <a href="index.html#project-calendar">首页项目日历</a>
+        <a href="#project-local-calendar">本项目日历</a>
+        <a href="../Meet_content/2026-05-17-%E7%BA%A7%E8%81%94%E5%8F%8D%E5%BA%94%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E8%AE%A8%E8%AE%BA.minutes.md">来源记录</a>
+      </div>
+    </article>
+
+
+    <article class="event-card done meeting" id="event-evt-2026-05-17-molgen-meeting">
+      <div class="event-meta">
+        <span>2026-05-17</span>
+        <span>会议</span>
+        <span>已完成</span>
+      </div>
+      <h4>条件分子生成论文共读</h4>
+      <p>形成 decoder-coupled drift、pullback gradient 和多样性控制等机制共识。</p>
+      <div class="event-links">
+        <a href="index.html#project-calendar">首页项目日历</a>
+        <a href="#project-local-calendar">本项目日历</a>
+        <a href="../Meet_content/2026-05-17-%E6%9D%A1%E4%BB%B6%E5%88%86%E5%AD%90%E7%94%9F%E6%88%90%E8%AE%BA%E6%96%87%E5%85%B1%E8%AF%BB.minutes.md">来源记录</a>
+      </div>
+    </article>
+
+        </section>
+        <section class="event-group" id="milestone-nodes">
+          <h3>里程碑区域</h3>
+
+    <article class="event-card planned milestone" id="event-evt-2026-05-31-cascade-evaluator">
+      <div class="event-meta">
+        <span>2026-05-31</span>
+        <span>里程碑</span>
+        <span>计划中</span>
+      </div>
+      <h4>级联路线评估器小验证</h4>
+      <p>计划整理 cascade/test set 路线，并完成第一版路线级可行性评估 prompt 或规则。</p>
+      <div class="event-links">
+        <a href="index.html#project-calendar">首页项目日历</a>
+        <a href="#project-local-calendar">本项目日历</a>
+
+      </div>
+    </article>
+
+        </section>
+      </div>
+    </section>
+
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10AI-吸附质放置</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <strong>AI for Biology Progress</strong>
+        <span>生物探索团队项目进展</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="index.html">总览</a>
+<a class="active" href="projects.html">项目进展</a>
+<a href="meetings.html">会议记录</a>
+<a href="updates.html">更新时间</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+
+    <section class="hero">
+      <p class="eyebrow">项目详情</p>
+      <h1>10AI-吸附质放置</h1>
+      <p class="lede">AdsorbFlow 代表 flow matching 在材料/催化界面建模中的方法扩展方向。</p>
+      <div class="meta-line">刷新时间：2026-05-17T22:16:41+08:00</div>
+    </section>
+
+    <section class="section project-detail">
+      <div class="content-stack">
+
+            <section class="md-section">
+              <h2>基本信息</h2>
+              <div class="table-wrap"><table><thead><tr><th>字段</th><th>内容</th></tr></thead><tbody><tr><td>项目方向</td><td>吸附质初始构型生成、催化表面低能吸附位点、energy-conditioned flow matching</td></tr><tr><td>当前状态</td><td>已形成 AdsorbFlow 方法框架、benchmark 结果和适用边界</td></tr><tr><td>负责人/参与者</td><td>待填写</td></tr><tr><td>更新时间</td><td>2026-02-22</td></tr></tbody></table></div>
+            </section>
+
+            <section class="md-section">
+              <h2>研究问题</h2>
+              <p>异相催化计算筛选中，一个实际瓶颈是如何把吸附质放到催化表面上，使其经过后续 MLFF/DFT relaxation 后落入正确的低能吸附构型。传统枚举方法需要大量 relaxation，扩散模型虽然提升了成功率，但通常需要约 100 个反向采样步骤。</p>
+<p>本项目关注的问题是：能否用 deterministic flow matching 在吸附质刚体平移和旋转空间中快速生成低能初始构型，并在减少采样步骤的同时保持或提升 DFT 验证成功率。</p>
+            </section>
+
+            <section class="md-section">
+              <h2>研究意义</h2>
+              <p>吸附质放置是催化、材料和表界面计算中的前处理关键步骤。一个更快、更准的放置模型可以显著提高高通量催化筛选效率，也能成为 AI-DFT-实验闭环中的入口模块。</p>
+<p>虽然该项目不是生物方向主体，但它与团队的分子建模、催化和科学计算能力相关，可作为后续材料、催化或生物界面建模的方法储备。</p>
+            </section>
+
+            <section class="md-section">
+              <h2>项目目标</h2>
+              <ul>
+<li>理解 AdsorbFlow 的任务定义、方法和结果。</li>
+<li>将吸附质放置问题表述为 translation + SO(3) rotation 的刚体构型生成任务。</li>
+<li>梳理 energy-conditioned flow matching 如何替代 diffusion sampling。</li>
+<li>明确该方法与 AdsorbDiff、AdsorbML 的性能差异和适用边界。</li>
+<li>判断是否可以迁移到团队后续的材料、催化或生物界面建模任务中。</li>
+</ul>
+            </section>
+
+            <section class="md-section">
+              <h2>技术路线</h2>
+              <ol>
+<li>数据集：使用 OC20-Dense，每个 slab-adsorbate system 有约 100 个局部最小吸附构型和能量。</li>
+<li>构型表达：吸附质作为刚体，建模二维平面平移 <code>t=(tx, ty)</code> 和三维旋转 <code>R in SO(3)</code>；垂直高度由后续 MLFF relaxation 调整。</li>
+<li>训练目标：从 relaxed low-energy pose 到 random rigid-body placement 构造 flow matching 路径，学习时间依赖 vector field。</li>
+<li>能量条件：使用 relative energy 通过 classifier-free guidance conditioning 加入模型，而不是显式使用能量梯度。</li>
+<li>采样：从随机 placement 出发，反向积分 ODE，默认只需 5 个 generative steps。</li>
+<li>验证：生成 10 个候选，MLFF relaxation + anomaly filtering 后，用 VASP DFT single-point 验证是否在 DFT reference minimum 0.1 eV 内。</li>
+</ol>
+            </section>
+
+            <section class="md-section">
+              <h2>当前进展</h2>
+              <p>AdsorbFlow 已经形成完整方法和 benchmark 结果：</p>
+<ul>
+<li>方法上提出 energy-conditioned deterministic transport，用 conditional flow matching 替代随机扩散反向过程。</li>
+<li>采样效率明显提升：默认 5 步 ODE integration，相比 diffusion baseline 约 100 步有约 20 倍步数减少。</li>
+<li>在 OC20-Dense 44 个 in-distribution systems 上，EquiformerV2 backbone 的 AdsorbFlow 达到 DFT SR@1 = 34.1%、SR@10 = 61.4%。</li>
+<li>对比基线：AdsorbDiff 为 SR@1 = 31.8%、SR@10 = 41.0%；AdsorbML 为 SR@10 = 47.7%。AdsorbFlow 在主要指标上更优。</li>
+<li>anomaly rate 方面，AdsorbFlow EquiformerV2 的 Anom.@10 为 6.8%，低于 AdsorbDiff 的 13.6%，与 AdsorbML 持平。</li>
+<li>在 50 个 out-of-distribution systems 上，AdsorbFlow 保持 SR@10 = 58.0%，MLFF-to-DFT gap 约 4 个百分点。</li>
+<li>已明确方法边界：当前将吸附质视为刚体，适合小到中等吸附质；对大分子内部 torsion、co-adsorbates、coverage effects、uncertainty 和闭环实验仍需扩展。</li>
+</ul>
+            </section>
+
+      </div>
+      <aside class="side-panel">
+        <div class="panel">
+          <h2>项目定位</h2>
+          <div class="fact-row"><div class="fact-label">项目类别</div><div class="fact-value">方法拓展</div></div>
+<div class="fact-row"><div class="fact-label">成熟度</div><div class="fact-value">方法调研/复现评估</div></div>
+<div class="fact-row"><div class="fact-label">研究方向</div><div class="fact-value">催化表面吸附构型生成</div></div>
+<div class="fact-row"><div class="fact-label">材料最后修改</div><div class="fact-value">2026-05-17T20:20:50+08:00</div></div>
+<div class="fact-row"><div class="fact-label">内容最后更新</div><div class="fact-value">2026-05-17T21:07:47+08:00</div></div>
+<div class="fact-row"><div class="fact-label">刷新状态</div><div class="fact-value">当前</div></div>
+        </div>
+        <div class="panel">
+          <h2>关键数字</h2>
+          <ul class="plain-list"><li>5 步 ODE 采样</li><li>SR@10 = 61.4%</li><li>约 20 倍采样步数减少</li></ul>
+        </div>
+        <div class="panel">
+          <h2>下一步与边界</h2>
+          <p><strong>下一步：</strong>判断能否迁移到团队后续材料、催化或生物界面建模任务。</p>
+          <p><strong>边界：</strong>当前为刚体吸附质放置；大分子 torsion、co-adsorbates 和不确定性仍未覆盖。</p>
+          <p><a class="text-link" href="../10AI-%E5%90%B8%E9%99%84%E8%B4%A8%E6%94%BE%E7%BD%AE/README.md">项目源文档</a></p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section project-events" id="project-events">
+      <div class="section-head">
+        <div>
+          <h2>项目日程</h2>
+          <p>仅显示 10AI-吸附质放置 的会议和里程碑；这些节点来自首页项目总日历的同一组记录。</p>
+        </div>
+        <a class="text-link" href="index.html#project-calendar">返回总日历</a>
+      </div>
+
+        <div class="calendar-panel compact-calendar" id="project-local-calendar">
+          <div class="calendar-head">
+            <h2>本项目日历</h2>
+            <p>暂无本项目日程节点。</p>
+          </div>
+        </div>
+
+      <div class="event-sections">
+        <section class="event-group" id="meeting-nodes">
+          <h3>会议节点</h3>
+          <div class="empty">暂无会议节点。</div>
+        </section>
+        <section class="event-group" id="milestone-nodes">
+          <h3>里程碑区域</h3>
+          <div class="empty">暂无里程碑节点。</div>
+        </section>
+      </div>
+    </section>
+
+
+  </main>
+</body>
+</html>

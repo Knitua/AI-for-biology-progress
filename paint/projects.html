@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>项目进展</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <strong>AI for Biology Progress</strong>
+        <span>生物探索团队项目进展</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="index.html">总览</a>
+<a class="active" href="projects.html">项目进展</a>
+<a href="meetings.html">会议记录</a>
+<a href="updates.html">更新时间</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+
+    <section class="hero">
+      <p class="eyebrow">项目进展</p>
+      <h1>10 个 AI 辅助科学探索方向</h1>
+      <p class="lede">项目按研究成熟度和任务类型组织，覆盖生物机制、药物筛选、功能肽发现、蛋白构象生成、疾病预测、反应设计和材料数据资源。</p>
+      <div class="meta-line">刷新时间：2026-05-17T22:16:41+08:00</div>
+    </section>
+
+
+            <section class="section">
+              <div class="section-head">
+                <div>
+                  <h2>重点项目</h2>
+                  <p>生物主体项目，已形成较清晰的问题定义、阶段结果或验证路线。</p>
+                </div>
+              </div>
+              <div class="project-grid">
+    <article class="project-card">
+      <a class="project-card-link" href="project-01.html" aria-label="打开01AI-BAT"></a>
+      <div class="card-topline">
+        <span class="badge teal">重点项目</span>
+        <span class="badge green">当前</span>
+      </div>
+      <div>
+        <h3>01AI-BAT</h3>
+        <p>蝙蝠免疫与病毒耐受</p>
+      </div>
+      <p>从 Bat1K 和比较基因组资源中筛选免疫、病毒耐受、炎症调控和 DNA 修复相关候选基因，适合作为生物机制探索主线。</p>
+      <ul class="stat-list"><li>1469 个物种状态条目</li><li>91 个完成测序/组装/注释</li><li>第一版 ESM2 试点路线</li></ul>
+
+        <div class="card-foot">
+          <div><span>下一步</span> 收敛 10-20 个试点物种与候选免疫基因清单，跑通 protein/CDS 表征和可视化。</div>
+          <div><span>边界</span> 不要从 TB 级原始 reads 起步；先用已注释 genome/CDS/protein 数据做小规模试点。</div>
+        </div>
+
+    </article>
+
+
+    <article class="project-card">
+      <a class="project-card-link" href="project-02.html" aria-label="打开02AI-老药新用"></a>
+      <div class="card-topline">
+        <span class="badge teal">重点项目</span>
+        <span class="badge green">当前</span>
+      </div>
+      <div>
+        <h3>02AI-老药新用</h3>
+        <p>癌症相关 drug-target pair 筛选</p>
+      </div>
+      <p>已完成 FDA 小分子与人类蛋白靶点的大规模筛选，并形成疾病证据整合和结构增强结果。</p>
+      <ul class="stat-list"><li>915000 个 pair</li><li>Top1000 结构增强</li><li>940 个 DiffDock 有效输出</li></ul>
+
+        <div class="card-foot">
+          <div><span>下一步</span> 从 Stage 6 Top100 中按癌种、机制证据和实验可行性下选 20-50 个候选。</div>
+          <div><span>边界</span> Full DiffDock 尚未完成，磁盘和失败任务重跑策略需要先解决。</div>
+        </div>
+
+    </article>
+
+
+    <article class="project-card">
+      <a class="project-card-link" href="project-07.html" aria-label="打开07AI-抗冻肽"></a>
+      <div class="card-topline">
+        <span class="badge teal">重点项目</span>
+        <span class="badge green">当前</span>
+      </div>
+      <div>
+        <h3>07AI-抗冻肽</h3>
+        <p>抗冻蛋白/肽预测生成与实验验证</p>
+      </div>
+      <p>已经形成预测、生成、天然库筛选、motif 挖掘和湿实验验证的完整路线。</p>
+      <ul class="stat-list"><li>64 万极地蛋白初筛</li><li>约 8000 条 AFP-like 生成候选</li><li>815/1000 LoRA 命中率</li></ul>
+
+        <div class="card-foot">
+          <div><span>下一步</span> 从候选蛋白 motif 下切到短肽，并补齐冰重结晶抑制和结构表征结果。</div>
+          <div><span>边界</span> 抗冻肽直接数据稀缺，需要谨慎区分 AFP-like 蛋白命中和短肽功能验证。</div>
+        </div>
+
+    </article>
+
+
+    <article class="project-card">
+      <a class="project-card-link" href="project-08.html" aria-label="打开08AI-可变蛋白"></a>
+      <div class="card-topline">
+        <span class="badge teal">重点项目</span>
+        <span class="badge green">当前</span>
+      </div>
+      <div>
+        <h3>08AI-可变蛋白</h3>
+        <p>IDP ensemble 生成</p>
+      </div>
+      <p>ThermoProt 已形成聚合物先验、flow matching、等变网络和 observable 审计框架。</p>
+      <ul class="stat-list"><li>Rg Pearson r 约 0.968</li><li>contact Jaccard 约 0.862</li><li>5-7% Rg 误差水平</li></ul>
+
+        <div class="card-foot">
+          <div><span>下一步</span> 补齐匹配 baseline、SAXS/FRET/PRE 等实验闭环和热力学校准证据。</div>
+          <div><span>边界</span> 只能表述为 Cα 级 IDP ensemble generator，不能宣称严格平衡模拟器或 broad SOTA。</div>
+        </div>
+
+    </article>
+
+
+    <article class="project-card">
+      <a class="project-card-link" href="project-09.html" aria-label="打开09AI-胃癌预测"></a>
+      <div class="card-topline">
+        <span class="badge teal">重点项目</span>
+        <span class="badge green">当前</span>
+      </div>
+      <div>
+        <h3>09AI-胃癌预测</h3>
+        <p>胃癌免疫治疗响应预测</p>
+      </div>
+      <p>围绕多模态数据、概念瓶颈和 TLS 弱监督识别，目标是输出临床可解释的响应预测报告。</p>
+      <ul class="stat-list"><li>约 29 例小样本</li><li>4 张标注 WSI</li><li>TLS patch-level 热图路线</li></ul>
+
+        <div class="card-foot">
+          <div><span>下一步</span> 规范 TLS 点标注到 patch 标签的生成策略，并连接 TLS 热图与响应预测主线。</div>
+          <div><span>边界</span> 样本量小且标注为点标注，模型结论需要强调弱监督和质量控制边界。</div>
+        </div>
+
+    </article>
+    </div>
+            </section>
+
+            <section class="section">
+              <div class="section-head">
+                <div>
+                  <h2>数据资源能力</h2>
+                  <p>复杂科学文献已经转成可审计、可筛选、可建模的数据资产。</p>
+                </div>
+              </div>
+              <div class="project-grid">
+    <article class="project-card">
+      <a class="project-card-link" href="project-05.html" aria-label="打开05AI-级联催化逆合成"></a>
+      <div class="card-topline">
+        <span class="badge blue">数据资源</span>
+        <span class="badge green">当前</span>
+      </div>
+      <div>
+        <h3>05AI-级联催化逆合成</h3>
+        <p>级联反应结构化数据库</p>
+      </div>
+      <p>已形成 Cascade Dataset v4 和质量分层体系，支撑复杂文献知识结构化与后续路线评估任务。</p>
+      <ul class="stat-list"><li>3810 条 reaction records</li><li>8609 个 steps</li><li>3744 条 gold/silver release</li></ul>
+
+        <div class="card-foot">
+          <div><span>下一步</span> 优先做路线级级联可行性评估，而不是从零训练完整规划模型。</div>
+          <div><span>边界</span> 现有数据量不足以支撑强生成式级联规划，短期应聚焦评估器和路线修饰。</div>
+        </div>
+
+    </article>
+
+
+    <article class="project-card">
+      <a class="project-card-link" href="project-06.html" aria-label="打开06AI-有机光伏材料"></a>
+      <div class="card-topline">
+        <span class="badge blue">数据资源</span>
+        <span class="badge green">当前</span>
+      </div>
+      <div>
+        <h3>06AI-有机光伏材料</h3>
+        <p>OPV 文献数据库与材料性能</p>
+      </div>
+      <p>OPV-DB 已完成从文献表格到 device-level 数据库、字段覆盖和物理验证的数据资源建设。</p>
+      <ul class="stat-list"><li>40599 条 device records</li><li>8018 个 DOI</li><li>94.4% 核心指标完整</li></ul>
+
+        <div class="card-foot">
+          <div><span>下一步</span> 确定第一阶段主任务：数据集建设、PCE 预测、材料筛选或器件条件分析。</div>
+          <div><span>边界</span> 处理条件字段覆盖较弱，厚度和退火温度仍需补齐或明确边界。</div>
+        </div>
+
+    </article>
+    </div>
+            </section>
+
+            <section class="section">
+              <div class="section-head">
+                <div>
+                  <h2>方法拓展</h2>
+                  <p>用于说明方法储备和潜在迁移方向。</p>
+                </div>
+              </div>
+              <div class="project-grid">
+    <article class="project-card">
+      <a class="project-card-link" href="project-10.html" aria-label="打开10AI-吸附质放置"></a>
+      <div class="card-topline">
+        <span class="badge amber">方法拓展</span>
+        <span class="badge green">当前</span>
+      </div>
+      <div>
+        <h3>10AI-吸附质放置</h3>
+        <p>催化表面吸附构型生成</p>
+      </div>
+      <p>AdsorbFlow 代表 flow matching 在材料/催化界面建模中的方法扩展方向。</p>
+      <ul class="stat-list"><li>5 步 ODE 采样</li><li>SR@10 = 61.4%</li><li>约 20 倍采样步数减少</li></ul>
+
+        <div class="card-foot">
+          <div><span>下一步</span> 判断能否迁移到团队后续材料、催化或生物界面建模任务。</div>
+          <div><span>边界</span> 当前为刚体吸附质放置；大分子 torsion、co-adsorbates 和不确定性仍未覆盖。</div>
+        </div>
+
+    </article>
+    </div>
+            </section>
+
+            <section class="section">
+              <div class="section-head">
+                <div>
+                  <h2>待启动/支撑方向</h2>
+                  <p>需要先补齐任务定义或作为支撑模块处理。</p>
+                </div>
+              </div>
+              <div class="project-grid">
+    <article class="project-card">
+      <a class="project-card-link" href="project-03.html" aria-label="打开03AI-LNP"></a>
+      <div class="card-topline">
+        <span class="badge amber">待补齐</span>
+        <span class="badge green">当前</span>
+      </div>
+      <div>
+        <h3>03AI-LNP</h3>
+        <p>脂质纳米颗粒递送系统</p>
+      </div>
+      <p>方向已建立，但第一阶段应用场景、变量体系和可用数据源仍需收敛。</p>
+      <ul class="stat-list"><li>应用场景待定</li><li>关键变量待整理</li><li>无新增结果材料</li></ul>
+
+        <div class="card-foot">
+          <div><span>下一步</span> 确定 mRNA、siRNA、肝靶向或通用配方整理中的一个最小任务。</div>
+          <div><span>边界</span> 若不先确定应用场景，项目容易停留在泛泛的递送系统介绍。</div>
+        </div>
+
+    </article>
+
+
+    <article class="project-card">
+      <a class="project-card-link" href="project-04.html" aria-label="打开04AI-生物化学"></a>
+      <div class="card-topline">
+        <span class="badge amber">待补齐</span>
+        <span class="badge green">当前</span>
+      </div>
+      <div>
+        <h3>04AI-生物化学</h3>
+        <p>团队共用机制框架</p>
+      </div>
+      <p>更适合作为团队生物化学基础支撑页，帮助不同项目共享蛋白、药物、代谢、通路等概念语言。</p>
+      <ul class="stat-list"><li>支撑 10 个方向</li><li>可转知识库</li><li>内容框架待明确</li></ul>
+
+        <div class="card-foot">
+          <div><span>下一步</span> 决定做知识库、课程式内容，还是某个具体生物化学研究问题。</div>
+          <div><span>边界</span> 不能只做概念堆叠，需要绑定到团队项目里的真实机制问题。</div>
+        </div>
+
+    </article>
+    </div>
+            </section>
+
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>项目总表</h2>
+          <p>用于快速比较成熟度、下一步和更新状态。</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>项目</th><th>项目类别</th><th>成熟度</th><th>下一步</th><th>状态</th></tr></thead>
+          <tbody><tr><td><a href="project-01.html">01AI-BAT</a></td><td>重点项目</td><td>模型/计算推进中</td><td>收敛 10-20 个试点物种与候选免疫基因清单，跑通 protein/CDS 表征和可视化。</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-02.html">02AI-老药新用</a></td><td>重点项目</td><td>阶段性成果已形成</td><td>从 Stage 6 Top100 中按癌种、机制证据和实验可行性下选 20-50 个候选。</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-03.html">03AI-LNP</a></td><td>待启动/支撑方向</td><td>任务定义待补齐</td><td>确定 mRNA、siRNA、肝靶向或通用配方整理中的一个最小任务。</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-04.html">04AI-生物化学</a></td><td>待启动/支撑方向</td><td>知识底座待定义</td><td>决定做知识库、课程式内容，还是某个具体生物化学研究问题。</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-05.html">05AI-级联催化逆合成</a></td><td>数据资源能力</td><td>数据资源成型</td><td>优先做路线级级联可行性评估，而不是从零训练完整规划模型。</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-06.html">06AI-有机光伏材料</a></td><td>数据资源能力</td><td>数据资源成型</td><td>确定第一阶段主任务：数据集建设、PCE 预测、材料筛选或器件条件分析。</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-07.html">07AI-抗冻肽</a></td><td>重点项目</td><td>结果推进中</td><td>从候选蛋白 motif 下切到短肽，并补齐冰重结晶抑制和结构表征结果。</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-08.html">08AI-可变蛋白</a></td><td>重点项目</td><td>方法框架成型</td><td>补齐匹配 baseline、SAXS/FRET/PRE 等实验闭环和热力学校准证据。</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-09.html">09AI-胃癌预测</a></td><td>重点项目</td><td>任务细化中</td><td>规范 TLS 点标注到 patch 标签的生成策略，并连接 TLS 热图与响应预测主线。</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-10.html">10AI-吸附质放置</a></td><td>方法拓展</td><td>方法调研/复现评估</td><td>判断能否迁移到团队后续材料、催化或生物界面建模任务。</td><td><span class="badge green">当前</span></td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

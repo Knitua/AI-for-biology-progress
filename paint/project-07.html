@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>07AI-抗冻肽</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <strong>AI for Biology Progress</strong>
+        <span>生物探索团队项目进展</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="index.html">总览</a>
+<a class="active" href="projects.html">项目进展</a>
+<a href="meetings.html">会议记录</a>
+<a href="updates.html">更新时间</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+
+    <section class="hero">
+      <p class="eyebrow">项目详情</p>
+      <h1>07AI-抗冻肽</h1>
+      <p class="lede">已经形成预测、生成、天然库筛选、motif 挖掘和湿实验验证的完整路线。</p>
+      <div class="meta-line">刷新时间：2026-05-17T22:16:41+08:00</div>
+    </section>
+
+    <section class="section project-detail">
+      <div class="content-stack">
+
+            <section class="md-section">
+              <h2>基本信息</h2>
+              <div class="table-wrap"><table><thead><tr><th>字段</th><th>内容</th></tr></thead><tbody><tr><td>项目方向</td><td>抗冻蛋白预测、抗冻蛋白生成、motif 挖掘、抗冻肽候选筛选与实验验证</td></tr><tr><td>当前状态</td><td>已完成预测器、生成器和候选筛选框架，motif 挖掘部分完成，湿实验正在推进</td></tr><tr><td>负责人/参与者</td><td>待填写</td></tr><tr><td>更新时间</td><td>待填写</td></tr></tbody></table></div>
+            </section>
+
+            <section class="md-section">
+              <h2>研究问题</h2>
+              <p>抗冻肽数据非常稀缺，公开有效抗冻肽数量远少于抗菌肽、抗癌肽等体系。本项目的核心问题是：能否先从抗冻蛋白体系切入，批量发现 AFP-like 蛋白，再通过 motif 挖掘和序列下切得到潜在抗冻肽候选，并最终进入实验验证。</p>
+<p>当前路线不是单纯预测已有抗冻肽，而是一个“预测-生成-筛选-motif-实验验证”的完整流程：先建立抗冻蛋白预测器，再训练生成器扩展候选空间，随后从天然蛋白库和生成蛋白库中筛选候选，最后用生物信息学工具挖掘功能 motif 并设计短肽。</p>
+            </section>
+
+            <section class="md-section">
+              <h2>研究意义</h2>
+              <p>抗冻蛋白/肽能够调控冰晶生长和重结晶，在器官冷冻保存、细胞冻存、冷冻疗法和食品工业中有应用潜力。抗冻肽相比大蛋白更易合成、免疫原性更低，也更适合快速实验迭代。</p>
+<p>该方向的亮点在于：抗冻肽体系目前缺少成熟的大规模 AI 筛选工作，如果能提出批量候选者并验证几条优质候选，就能形成清晰的方法学故事和应用价值。</p>
+            </section>
+
+            <section class="md-section">
+              <h2>项目目标</h2>
+              <ul>
+<li>构建多个 AFP 预测器，并通过多预测器级联降低假阳性。</li>
+<li>基于 ProtGPT2 + LoRA 生成 AFP-like 蛋白候选。</li>
+<li>从天然极地生物蛋白库和生成蛋白库中筛选高置信候选。</li>
+<li>使用 MMseqs2、k-mer、MAFFT、MEME 等工具挖掘保守 motif。</li>
+<li>将 motif 下切为候选抗冻肽，并推进冰重结晶抑制、结构表征和细胞冻存相关实验。</li>
+</ul>
+            </section>
+
+            <section class="md-section">
+              <h2>技术路线</h2>
+              <ol>
+<li>预测器：使用 UniProt 约 7k-8k 正样本和约 8k 负样本训练，Swiss-Prot 作为独立验证集；模型包括 SaProt、ESM2、SaProt+ESM2 融合模型。</li>
+<li>生成器：以 ProtGPT2 为基座，引入 LoRA/PEFT 微调，使模型更倾向生成 AFP-like 序列。</li>
+<li>天然蛋白库筛选：从 UniProt 约 64 万条极地生物来源蛋白中，先用 ESM2-only 快速初筛，再用更强专家预测器二次判分。</li>
+<li>生成蛋白库筛选：使用 LoRA 微调的 ProtGPT2 生成约 10000 条候选蛋白，再通过多个预测器筛选。</li>
+<li>motif 挖掘：对候选蛋白做 MMseqs2 去冗余/聚类、k-mer 统计、MAFFT 多序列比对、保守性分析和 MEME motif 挖掘。</li>
+<li>实验验证：推进冰重结晶抑制实验、CD/Raman/DSC 结构与相互作用表征，以及细胞冻存与生物相容性实验。</li>
+</ol>
+            </section>
+
+            <section class="md-section">
+              <h2>当前进展</h2>
+              <p>本项目已经形成比较完整的预测、生成、筛选和实验验证路线：</p>
+<ul>
+<li>已明确总体策略：由于抗冻肽直接数据稀缺，先挖掘抗冻蛋白，再从抗冻蛋白中识别功能 motif 并下切为候选抗冻肽。</li>
+<li>抗冻蛋白预测器开发已完成：目标是构建多个 AFP 预测器，对天然蛋白库和生成蛋白库进行轮询筛选，形成 predictor voting 框架。</li>
+<li>生成器已完成第一版：使用 ProtGPT2 + LoRA 微调后，生成序列经预测器评估的命中率约 815/1000；全量微调命中率约 497/1000；生成序列与训练数据不同源、不相似。</li>
+<li>天然蛋白库筛选已完成一轮：从 UniProt 约 64 万条极地生物来源蛋白中，用 ESM2-only 得到约 1800 条高置信候选，再计划结合更强预测器、去冗余和注释过滤。</li>
+<li>生成蛋白筛选已完成：LoRA 微调 ProtGPT2 生成约 10000 条蛋白候选，经多个预测器筛选得到约 8000 条 AFP-like 蛋白。</li>
+<li>统一生物信息学分析流程已完成：MMseqs2 去冗余与聚类、k-mer 统计、MAFFT 多序列比对、MEME motif 挖掘。</li>
+<li>已观察到一些 motif 共性：亲水/疏水氨基酸交替可能在冰面形成 M/W 式结构，重复 motif 片段可能倾向 alpha-helix。</li>
+<li>分子动力学模拟部分已有基本范式，但尚未完成。</li>
+<li>湿实验正在开展：包括冰重结晶抑制实验、CD/Raman/DSC 结构表征，以及细胞冻存和生物相容性实验。</li>
+</ul>
+            </section>
+
+      </div>
+      <aside class="side-panel">
+        <div class="panel">
+          <h2>项目定位</h2>
+          <div class="fact-row"><div class="fact-label">项目类别</div><div class="fact-value">重点项目</div></div>
+<div class="fact-row"><div class="fact-label">成熟度</div><div class="fact-value">结果推进中</div></div>
+<div class="fact-row"><div class="fact-label">研究方向</div><div class="fact-value">抗冻蛋白/肽预测生成与实验验证</div></div>
+<div class="fact-row"><div class="fact-label">材料最后修改</div><div class="fact-value">2026-05-17T20:20:50+08:00</div></div>
+<div class="fact-row"><div class="fact-label">内容最后更新</div><div class="fact-value">2026-05-17T21:07:31+08:00</div></div>
+<div class="fact-row"><div class="fact-label">刷新状态</div><div class="fact-value">当前</div></div>
+        </div>
+        <div class="panel">
+          <h2>关键数字</h2>
+          <ul class="plain-list"><li>64 万极地蛋白初筛</li><li>约 8000 条 AFP-like 生成候选</li><li>815/1000 LoRA 命中率</li></ul>
+        </div>
+        <div class="panel">
+          <h2>下一步与边界</h2>
+          <p><strong>下一步：</strong>从候选蛋白 motif 下切到短肽，并补齐冰重结晶抑制和结构表征结果。</p>
+          <p><strong>边界：</strong>抗冻肽直接数据稀缺，需要谨慎区分 AFP-like 蛋白命中和短肽功能验证。</p>
+          <p><a class="text-link" href="../07AI-%E6%8A%97%E5%86%BB%E8%82%BD/README.md">项目源文档</a></p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section project-events" id="project-events">
+      <div class="section-head">
+        <div>
+          <h2>项目日程</h2>
+          <p>仅显示 07AI-抗冻肽 的会议和里程碑；这些节点来自首页项目总日历的同一组记录。</p>
+        </div>
+        <a class="text-link" href="index.html#project-calendar">返回总日历</a>
+      </div>
+
+    <div class="calendar-panel compact-calendar" id="project-local-calendar">
+
+      <div class="calendar-head">
+        <h2>本项目日历</h2>
+        <p>当前项目的会议、里程碑和计划节点</p>
+      </div>
+
+      <div class="calendar-summary">
+        <div class="calendar-summary-item"><strong>2</strong><span>日程节点</span></div>
+        <div class="calendar-summary-item"><strong>1</strong><span>已完成节点</span></div>
+        <div class="calendar-summary-item"><strong>1</strong><span>计划中节点</span></div>
+        <div class="calendar-summary-item"><strong>1</strong><span>涉及项目；下一节点：2026-05-24 · 抗冻肽短肽与湿实验同步</span></div>
+      </div>
+      <div class="calendar-legend">
+        <span class="legend-item"><span class="legend-dot meeting"></span>会议</span>
+        <span class="legend-item"><span class="legend-dot done"></span>已完成节点</span>
+        <span class="legend-item"><span class="legend-dot planned"></span>计划节点</span>
+      </div>
+      <div class="calendar-months">
+
+    <section class="calendar-month">
+      <div class="calendar-month-title">
+        <h3>2026年5月</h3>
+        <span>2 个节点</span>
+      </div>
+      <div class="calendar-grid">
+        <div class="calendar-weekday">周一</div><div class="calendar-weekday">周二</div><div class="calendar-weekday">周三</div><div class="calendar-weekday">周四</div><div class="calendar-weekday">周五</div><div class="calendar-weekday">周六</div><div class="calendar-weekday">周日</div>
+        <div class="calendar-day empty" aria-hidden="true"></div><div class="calendar-day empty" aria-hidden="true"></div><div class="calendar-day empty" aria-hidden="true"></div><div class="calendar-day empty" aria-hidden="true"></div>
+            <div class="calendar-day no-events">
+              <div class="calendar-date">1<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">2<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">3<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">4<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">5<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">6<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">7<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">8<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">9<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">10<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">11<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">12<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">13<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">14<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">15<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">16<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day has-events today">
+              <div class="calendar-date">17<span>1 个节点</span></div>
+              <div class="calendar-events">
+    <a class="calendar-event done milestone project-p07" href="project-07.html#event-evt-2026-05-17-afp-pipeline" title="2026-05-17 抗冻肽预测生成流程成型，07AI-抗冻肽，里程碑，已完成" aria-label="2026-05-17 抗冻肽预测生成流程成型，07AI-抗冻肽，里程碑，已完成">
+      <span class="calendar-event-content">
+        <span class="calendar-event-meta">
+          <span class="project-pill">P07</span>
+          <span>里程碑 · 已完成</span>
+        </span>
+        <strong>抗冻肽预测生成流程成型</strong>
+        <span class="event-project-title">07AI-抗冻肽</span>
+      </span>
+    </a>
+    </div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">18<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">19<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">20<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">21<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">22<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">23<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day has-events">
+              <div class="calendar-date">24<span>1 个节点</span></div>
+              <div class="calendar-events">
+    <a class="calendar-event planned meeting project-p07" href="project-07.html#event-evt-2026-05-24-afp-wetlab-sync" title="2026-05-24 抗冻肽短肽与湿实验同步，07AI-抗冻肽，会议，计划中" aria-label="2026-05-24 抗冻肽短肽与湿实验同步，07AI-抗冻肽，会议，计划中">
+      <span class="calendar-event-content">
+        <span class="calendar-event-meta">
+          <span class="project-pill">P07</span>
+          <span>会议 · 计划中</span>
+        </span>
+        <strong>抗冻肽短肽与湿实验同步</strong>
+        <span class="event-project-title">07AI-抗冻肽</span>
+      </span>
+    </a>
+    </div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">25<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">26<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">27<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">28<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">29<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">30<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+            <div class="calendar-day no-events">
+              <div class="calendar-date">31<span></span></div>
+              <div class="calendar-events"></div>
+            </div>
+
+      </div>
+    </section>
+
+      </div>
+
+
+    </div>
+
+      <div class="event-sections">
+        <section class="event-group" id="meeting-nodes">
+          <h3>会议节点</h3>
+
+    <article class="event-card planned meeting" id="event-evt-2026-05-24-afp-wetlab-sync">
+      <div class="event-meta">
+        <span>2026-05-24</span>
+        <span>会议</span>
+        <span>计划中</span>
+      </div>
+      <h4>抗冻肽短肽与湿实验同步</h4>
+      <p>计划对 motif 下切候选、冰重结晶抑制实验和结构表征进展进行同步。</p>
+      <div class="event-links">
+        <a href="index.html#project-calendar">首页项目日历</a>
+        <a href="#project-local-calendar">本项目日历</a>
+
+      </div>
+    </article>
+
+        </section>
+        <section class="event-group" id="milestone-nodes">
+          <h3>里程碑区域</h3>
+
+    <article class="event-card done milestone" id="event-evt-2026-05-17-afp-pipeline">
+      <div class="event-meta">
+        <span>2026-05-17</span>
+        <span>里程碑</span>
+        <span>已完成</span>
+      </div>
+      <h4>抗冻肽预测生成流程成型</h4>
+      <p>完成预测器、生成器、候选筛选和 motif 挖掘流程，湿实验正在推进。</p>
+      <div class="event-links">
+        <a href="index.html#project-calendar">首页项目日历</a>
+        <a href="#project-local-calendar">本项目日历</a>
+        <a href="../07AI-%E6%8A%97%E5%86%BB%E8%82%BD/README.md">来源记录</a>
+      </div>
+    </article>
+
+        </section>
+      </div>
+    </section>
+
+
+  </main>
+</body>
+</html>

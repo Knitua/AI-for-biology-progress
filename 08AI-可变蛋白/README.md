@@ -19,7 +19,7 @@
 
 许多蛋白尤其是 IDP 并不存在唯一稳定构象，传统单结构预测无法完整表达其功能状态。这个项目的意义在于把蛋白 ensemble 问题和热力学/聚合物物理联系起来：不是只生成“看起来像”的结构，而是检查生成分布是否在全局尺寸、接触概率、柔性和实验 observable 上合理。
 
-对团队展示来说，这个项目很适合作为“蛋白构象生成 + 物理约束 + 谨慎 benchmark 审计”的代表，亮点是边界讲得很清楚：当前可以说是一个 thermodynamically motivated Cα ensemble generator，但不能说已经是严格平衡模拟器或 broad SOTA。
+本项目已经形成“蛋白构象生成 + 物理约束 + 谨慎 benchmark 审计”的方法框架。当前可以将 ThermoProt 定位为 thermodynamically motivated Cα ensemble generator，但不能说已经是严格平衡模拟器或 broad SOTA。
 
 ## 项目目标
 
