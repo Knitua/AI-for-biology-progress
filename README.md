@@ -4,7 +4,11 @@
 
 请优先打开下面的页面查看项目和会议总结的更新时间：
 
-### [打开更新时间面板](./paint/index.html)
+### [打开项目进展更新时间面板](https://knitua.github.io/AI-for-biology-progress/)
+
+本地查看：
+
+### [打开本地更新时间面板](./paint/index.html)
 
 刷新时间戳数据：
 
@@ -60,7 +64,8 @@ python "paint\refresh_paint.py"
 
 - [项目总览](./Panel_plan.md)
 - [项目列表](./项目列表.md)
-- [更新时间面板](./paint/index.html)
+- [更新时间面板](https://knitua.github.io/AI-for-biology-progress/)
+- [本地更新时间面板](./paint/index.html)
 - [项目更新 Prompt](./Update_prompt/Project_Prompt.md)
 - [会议总结 Prompt](./Update_prompt/Meeting_Minutes_Agent_Prompt.md)
 - [项目模板](./Template/Project_Template.md)
