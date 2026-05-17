@@ -25,45 +25,447 @@
 
     <section class="hero">
       <p class="eyebrow">更新时间</p>
-      <h1>项目文件更新时间与刷新记录</h1>
-      <p class="lede">项目材料、项目 README 和会议纪要的更新时间记录如下，用于判断内容是否已经同步。</p>
-      <div class="meta-line">刷新时间：2026-05-17T22:16:41+08:00</div>
-    </section>
-
-    <section class="section">
-      <div class="section-head"><div><h2>项目状态</h2><p>材料修改时间与 README 内容更新时间。</p></div></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>项目</th><th>材料最后修改</th><th>内容最后更新</th><th>状态</th></tr></thead>
-          <tbody><tr><td><a href="project-01.html">01AI-BAT</a></td><td>2026-05-17T20:20:50+08:00</td><td>2026-05-17T21:06:36+08:00</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-02.html">02AI-老药新用</a></td><td>2026-05-17T20:20:50+08:00</td><td>2026-05-17T21:06:49+08:00</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-03.html">03AI-LNP</a></td><td></td><td>2026-05-17T21:06:56+08:00</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-04.html">04AI-生物化学</a></td><td></td><td>2026-05-17T21:07:09+08:00</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-05.html">05AI-级联催化逆合成</a></td><td>2026-05-17T20:20:50+08:00</td><td>2026-05-17T21:07:18+08:00</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-06.html">06AI-有机光伏材料</a></td><td>2026-05-17T20:20:50+08:00</td><td>2026-05-17T21:07:26+08:00</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-07.html">07AI-抗冻肽</a></td><td>2026-05-17T20:20:50+08:00</td><td>2026-05-17T21:07:31+08:00</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-08.html">08AI-可变蛋白</a></td><td>2026-05-17T20:20:50+08:00</td><td>2026-05-17T21:07:42+08:00</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-09.html">09AI-胃癌预测</a></td><td>2026-05-17T20:20:50+08:00</td><td>2026-05-17T21:09:50+08:00</td><td><span class="badge green">当前</span></td></tr><tr><td><a href="project-10.html">10AI-吸附质放置</a></td><td>2026-05-17T20:20:50+08:00</td><td>2026-05-17T21:07:47+08:00</td><td><span class="badge green">当前</span></td></tr></tbody>
-        </table>
+      <h1>内容同步状态</h1>
+      <p class="lede">这里展示项目页面、项目材料和会议纪要之间的同步状态；路径和原始扫描字段收进链接与更新流水中。</p>
+      <div class="meta-line">最近扫描：2026-05-17 22:27</div>
+      <div class="update-dashboard">
+        <div class="metric-card"><div class="metric-label">同步记录</div><div class="metric-value">12</div></div>
+        <div class="metric-card"><div class="metric-label">已同步</div><div class="metric-value">12</div></div>
+        <div class="metric-card"><div class="metric-label">需要同步</div><div class="metric-value">0</div></div>
+        <div class="metric-card"><div class="metric-label">有材料来源</div><div class="metric-value">10</div></div>
       </div>
     </section>
 
     <section class="section">
-      <div class="section-head"><div><h2>会议总结</h2><p>只记录 .minutes.md，不记录原始转写 txt。</p></div></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>名称</th><th>路径</th><th>文件最后修改</th><th>内容最后更新</th><th>状态</th></tr></thead>
-          <tbody><tr><td>2026-05-17-条件分子生成论文共读.minutes.md</td><td><code>Meet_content\2026-05-17-条件分子生成论文共读.minutes.md</code></td><td>2026-05-17T21:07:55+08:00</td><td>2026-05-17T19:29:51+08:00</td><td><span class="badge green">当前</span></td></tr><tr><td>2026-05-17-级联反应路径规划讨论.minutes.md</td><td><code>Meet_content\2026-05-17-级联反应路径规划讨论.minutes.md</code></td><td>2026-05-17T21:08:03+08:00</td><td>2026-05-17T19:29:51+08:00</td><td><span class="badge green">当前</span></td></tr></tbody>
-        </table>
+      <div class="section-head">
+        <div>
+          <h2>项目同步</h2>
+          <p>每张卡片比较项目材料最后修改时间和页面内容同步时间。</p>
+        </div>
+      </div>
+      <div class="sync-grid">
+
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">项目</span>
+              <h3>01AI-BAT</h3>
+            </div>
+            <span class="badge green">当前</span>
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>材料修改</span>
+              <strong>2026-05-17 20:20</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>2026-05-17 21:06</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：2026-05-17 22:27 · 已同步</p>
+          <div class="meeting-link-row">
+            <a href="project-01.html">打开项目</a>
+          </div>
+        </article>
+
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">项目</span>
+              <h3>02AI-老药新用</h3>
+            </div>
+            <span class="badge green">当前</span>
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>材料修改</span>
+              <strong>2026-05-17 20:20</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>2026-05-17 21:06</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：2026-05-17 22:27 · 已同步</p>
+          <div class="meeting-link-row">
+            <a href="project-02.html">打开项目</a>
+          </div>
+        </article>
+
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">项目</span>
+              <h3>03AI-LNP</h3>
+            </div>
+            <span class="badge green">当前</span>
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>材料修改</span>
+              <strong>无额外材料</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>2026-05-17 21:06</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：2026-05-17 22:27 · 已同步</p>
+          <div class="meeting-link-row">
+            <a href="project-03.html">打开项目</a>
+          </div>
+        </article>
+
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">项目</span>
+              <h3>04AI-生物化学</h3>
+            </div>
+            <span class="badge green">当前</span>
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>材料修改</span>
+              <strong>无额外材料</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>2026-05-17 21:07</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：2026-05-17 22:27 · 已同步</p>
+          <div class="meeting-link-row">
+            <a href="project-04.html">打开项目</a>
+          </div>
+        </article>
+
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">项目</span>
+              <h3>05AI-级联催化逆合成</h3>
+            </div>
+            <span class="badge green">当前</span>
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>材料修改</span>
+              <strong>2026-05-17 20:20</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>2026-05-17 21:07</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：2026-05-17 22:27 · 已同步</p>
+          <div class="meeting-link-row">
+            <a href="project-05.html">打开项目</a>
+          </div>
+        </article>
+
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">项目</span>
+              <h3>06AI-有机光伏材料</h3>
+            </div>
+            <span class="badge green">当前</span>
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>材料修改</span>
+              <strong>2026-05-17 20:20</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>2026-05-17 21:07</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：2026-05-17 22:27 · 已同步</p>
+          <div class="meeting-link-row">
+            <a href="project-06.html">打开项目</a>
+          </div>
+        </article>
+
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">项目</span>
+              <h3>07AI-抗冻肽</h3>
+            </div>
+            <span class="badge green">当前</span>
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>材料修改</span>
+              <strong>2026-05-17 20:20</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>2026-05-17 21:07</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：2026-05-17 22:27 · 已同步</p>
+          <div class="meeting-link-row">
+            <a href="project-07.html">打开项目</a>
+          </div>
+        </article>
+
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">项目</span>
+              <h3>08AI-可变蛋白</h3>
+            </div>
+            <span class="badge green">当前</span>
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>材料修改</span>
+              <strong>2026-05-17 20:20</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>2026-05-17 21:07</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：2026-05-17 22:27 · 已同步</p>
+          <div class="meeting-link-row">
+            <a href="project-08.html">打开项目</a>
+          </div>
+        </article>
+
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">项目</span>
+              <h3>09AI-胃癌预测</h3>
+            </div>
+            <span class="badge green">当前</span>
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>材料修改</span>
+              <strong>2026-05-17 20:20</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>2026-05-17 21:09</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：2026-05-17 22:27 · 已同步</p>
+          <div class="meeting-link-row">
+            <a href="project-09.html">打开项目</a>
+          </div>
+        </article>
+
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">项目</span>
+              <h3>10AI-吸附质放置</h3>
+            </div>
+            <span class="badge green">当前</span>
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>材料修改</span>
+              <strong>2026-05-17 20:20</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>2026-05-17 21:07</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：2026-05-17 22:27 · 已同步</p>
+          <div class="meeting-link-row">
+            <a href="project-10.html">打开项目</a>
+          </div>
+        </article>
+
       </div>
     </section>
 
     <section class="section">
-      <div class="section-head"><div><h2>最近记录</h2><p>最近 30 条内容刷新记录。</p></div></div>
-      <div class="panel"><ol class="number-list"><li><strong>2026-05-17T19:50:54+08:00</strong> 初始扫描 <code>01AI-BAT</code> 初始状态扫描</li>
-<li><strong>2026-05-17T19:50:54+08:00</strong> 初始扫描 <code>02AI-老药新用</code> 初始状态扫描</li>
-<li><strong>2026-05-17T19:50:54+08:00</strong> 初始扫描 <code>03AI-LNP</code> 初始状态扫描</li>
-<li><strong>2026-05-17T19:50:54+08:00</strong> 初始扫描 <code>04AI-生物化学</code> 初始状态扫描</li>
-<li><strong>2026-05-17T19:50:54+08:00</strong> 初始扫描 <code>05AI-级联催化逆合成</code> 初始状态扫描</li>
-<li><strong>2026-05-17T19:50:54+08:00</strong> 初始扫描 <code>06AI-有机光伏材料</code> 初始状态扫描</li>
-<li><strong>2026-05-17T19:50:54+08:00</strong> 初始扫描 <code>07AI-抗冻肽</code> 初始状态扫描</li>
-<li><strong>2026-05-17T19:50:54+08:00</strong> 初始扫描 <code>08AI-可变蛋白</code> 初始状态扫描</li>
-<li><strong>2026-05-17T19:50:54+08:00</strong> 初始扫描 <code>09AI-胃癌预测</code> 初始状态扫描</li>
-<li><strong>2026-05-17T19:50:54+08:00</strong> 初始扫描 <code>10AI-吸附质放置</code> 初始状态扫描</li>
-<li><strong>2026-05-17T19:50:54+08:00</strong> 初始扫描 <code>Meet_content\2026-05-17-条件分子生成论文共读.minutes.md</code> 初始状态扫描</li>
-<li><strong>2026-05-17T19:50:54+08:00</strong> 初始扫描 <code>Meet_content\2026-05-17-级联反应路径规划讨论.minutes.md</code> 初始状态扫描</li></ol></div>
+      <div class="section-head">
+        <div>
+          <h2>会议纪要同步</h2>
+          <p>只展示已归档的 .minutes.md 纪要，原始转写不进入这个视图。</p>
+        </div>
+      </div>
+      <div class="sync-grid meeting-sync-grid">
+
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">会议纪要</span>
+              <h3>2026-05-17-条件分子生成论文共读</h3>
+            </div>
+            <span class="badge green">当前</span>
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>纪要修改</span>
+              <strong>2026-05-17 21:07</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>2026-05-17 19:29</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：2026-05-17 22:27 · 已同步</p>
+          <div class="meeting-link-row">
+            <a href="../Meet_content/2026-05-17-%E6%9D%A1%E4%BB%B6%E5%88%86%E5%AD%90%E7%94%9F%E6%88%90%E8%AE%BA%E6%96%87%E5%85%B1%E8%AF%BB.minutes.md">打开纪要</a>
+          </div>
+        </article>
+
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">会议纪要</span>
+              <h3>2026-05-17-级联反应路径规划讨论</h3>
+            </div>
+            <span class="badge green">当前</span>
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>纪要修改</span>
+              <strong>2026-05-17 21:08</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>2026-05-17 19:29</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：2026-05-17 22:27 · 已同步</p>
+          <div class="meeting-link-row">
+            <a href="../Meet_content/2026-05-17-%E7%BA%A7%E8%81%94%E5%8F%8D%E5%BA%94%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E8%AE%A8%E8%AE%BA.minutes.md">打开纪要</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>最近同步活动</h2>
+          <p>保留最近 20 条扫描或更新记录，用于追踪页面内容何时被刷新。</p>
+        </div>
+      </div>
+      <ul class="activity-feed">
+
+        <li class="activity-item">
+          <span class="activity-time">05-17 19:50</span>
+          <span class="activity-title">
+            <strong>2026-05-17-级联反应路径规划讨论</strong>
+            <span>会议纪要 · 初始扫描 · 初始状态扫描</span>
+          </span>
+          <a class="text-link" href="../Meet_content/2026-05-17-%E7%BA%A7%E8%81%94%E5%8F%8D%E5%BA%94%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E8%AE%A8%E8%AE%BA.minutes.md">查看</a>
+        </li>
+
+        <li class="activity-item">
+          <span class="activity-time">05-17 19:50</span>
+          <span class="activity-title">
+            <strong>2026-05-17-条件分子生成论文共读</strong>
+            <span>会议纪要 · 初始扫描 · 初始状态扫描</span>
+          </span>
+          <a class="text-link" href="../Meet_content/2026-05-17-%E6%9D%A1%E4%BB%B6%E5%88%86%E5%AD%90%E7%94%9F%E6%88%90%E8%AE%BA%E6%96%87%E5%85%B1%E8%AF%BB.minutes.md">查看</a>
+        </li>
+
+        <li class="activity-item">
+          <span class="activity-time">05-17 19:50</span>
+          <span class="activity-title">
+            <strong>10AI-吸附质放置</strong>
+            <span>项目 · 初始扫描 · 初始状态扫描</span>
+          </span>
+          <a class="text-link" href="project-10.html">查看</a>
+        </li>
+
+        <li class="activity-item">
+          <span class="activity-time">05-17 19:50</span>
+          <span class="activity-title">
+            <strong>09AI-胃癌预测</strong>
+            <span>项目 · 初始扫描 · 初始状态扫描</span>
+          </span>
+          <a class="text-link" href="project-09.html">查看</a>
+        </li>
+
+        <li class="activity-item">
+          <span class="activity-time">05-17 19:50</span>
+          <span class="activity-title">
+            <strong>08AI-可变蛋白</strong>
+            <span>项目 · 初始扫描 · 初始状态扫描</span>
+          </span>
+          <a class="text-link" href="project-08.html">查看</a>
+        </li>
+
+        <li class="activity-item">
+          <span class="activity-time">05-17 19:50</span>
+          <span class="activity-title">
+            <strong>07AI-抗冻肽</strong>
+            <span>项目 · 初始扫描 · 初始状态扫描</span>
+          </span>
+          <a class="text-link" href="project-07.html">查看</a>
+        </li>
+
+        <li class="activity-item">
+          <span class="activity-time">05-17 19:50</span>
+          <span class="activity-title">
+            <strong>06AI-有机光伏材料</strong>
+            <span>项目 · 初始扫描 · 初始状态扫描</span>
+          </span>
+          <a class="text-link" href="project-06.html">查看</a>
+        </li>
+
+        <li class="activity-item">
+          <span class="activity-time">05-17 19:50</span>
+          <span class="activity-title">
+            <strong>05AI-级联催化逆合成</strong>
+            <span>项目 · 初始扫描 · 初始状态扫描</span>
+          </span>
+          <a class="text-link" href="project-05.html">查看</a>
+        </li>
+
+        <li class="activity-item">
+          <span class="activity-time">05-17 19:50</span>
+          <span class="activity-title">
+            <strong>04AI-生物化学</strong>
+            <span>项目 · 初始扫描 · 初始状态扫描</span>
+          </span>
+          <a class="text-link" href="project-04.html">查看</a>
+        </li>
+
+        <li class="activity-item">
+          <span class="activity-time">05-17 19:50</span>
+          <span class="activity-title">
+            <strong>03AI-LNP</strong>
+            <span>项目 · 初始扫描 · 初始状态扫描</span>
+          </span>
+          <a class="text-link" href="project-03.html">查看</a>
+        </li>
+
+        <li class="activity-item">
+          <span class="activity-time">05-17 19:50</span>
+          <span class="activity-title">
+            <strong>02AI-老药新用</strong>
+            <span>项目 · 初始扫描 · 初始状态扫描</span>
+          </span>
+          <a class="text-link" href="project-02.html">查看</a>
+        </li>
+
+        <li class="activity-item">
+          <span class="activity-time">05-17 19:50</span>
+          <span class="activity-title">
+            <strong>01AI-BAT</strong>
+            <span>项目 · 初始扫描 · 初始状态扫描</span>
+          </span>
+          <a class="text-link" href="project-01.html">查看</a>
+        </li>
+
+      </ul>
     </section>
 
   </main>

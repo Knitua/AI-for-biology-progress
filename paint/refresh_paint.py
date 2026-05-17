@@ -1317,6 +1317,128 @@ code {
   font-size: 16px;
 }
 
+.update-dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.sync-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.meeting-sync-grid {
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+}
+
+.sync-card {
+  display: grid;
+  gap: 13px;
+  min-height: 100%;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.sync-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sync-card-head h3 {
+  margin: 4px 0 0;
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.sync-type {
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.time-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.time-item {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 9px 10px;
+  background: #fbfcfd;
+}
+
+.time-item span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.time-item strong {
+  display: block;
+  margin-top: 3px;
+  color: #182633;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.sync-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.activity-feed {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.activity-item {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px 12px;
+  background: var(--panel);
+}
+
+.activity-time {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.activity-title {
+  min-width: 0;
+}
+
+.activity-title strong {
+  display: block;
+  color: #182633;
+  line-height: 1.35;
+}
+
+.activity-title span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+
 .empty {
   color: var(--muted);
   background: var(--panel);
@@ -1330,8 +1452,11 @@ code {
   .judgement-grid,
   .project-grid,
   .meeting-dashboard,
+  .update-dashboard,
   .meeting-brief-grid,
-  .action-board {
+  .action-board,
+  .sync-grid,
+  .meeting-sync-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1373,6 +1498,11 @@ code {
     grid-template-columns: 1fr;
   }
 
+  .activity-item {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
   .side-panel {
     position: static;
   }
@@ -1394,8 +1524,12 @@ code {
   .calendar-summary,
   .compact-calendar .calendar-summary,
   .meeting-dashboard,
+  .update-dashboard,
   .meeting-brief-grid,
-  .action-board {
+  .action-board,
+  .sync-grid,
+  .meeting-sync-grid,
+  .time-pair {
     grid-template-columns: 1fr;
   }
 
@@ -1973,6 +2107,44 @@ def history_summary_label(summary: str) -> str:
     return {
         "initial paint status scan": "初始状态扫描",
     }.get(summary, summary)
+
+
+def display_time(value: str) -> str:
+    if not value:
+        return "未记录"
+    try:
+        parsed = datetime.fromisoformat(value)
+    except ValueError:
+        return value
+    return parsed.strftime("%Y-%m-%d %H:%M")
+
+
+def compact_display_time(value: str) -> str:
+    if not value:
+        return "未记录"
+    try:
+        parsed = datetime.fromisoformat(value)
+    except ValueError:
+        return value
+    return parsed.strftime("%m-%d %H:%M")
+
+
+def display_item_name(row: dict[str, str]) -> str:
+    name = row.get("item_name", "")
+    if row.get("item_type") == "meeting_minutes":
+        name = name.removesuffix(".minutes.md")
+    return name or row.get("relative_path", "未命名项目")
+
+
+def item_type_label(item_type: str) -> str:
+    return {
+        "project": "项目",
+        "meeting_minutes": "会议纪要",
+    }.get(item_type, "记录")
+
+
+def status_text(needs_update: str) -> str:
+    return "需要同步" if needs_update == "yes" else "已同步"
 
 
 def tier_badge(tier: str) -> str:
@@ -2751,67 +2923,125 @@ def render_meetings_page(meetings: list[dict[str, object]], events: list[dict[st
 def render_updates_page(status_rows: list[dict[str, str]], history_rows: list[dict[str, str]], now: str) -> str:
     projects = [row for row in status_rows if row["item_type"] == "project"]
     meetings = [row for row in status_rows if row["item_type"] == "meeting_minutes"]
-    project_rows_html = []
-    for row in projects:
-        project_rows_html.append(
-            "<tr>"
-            f'<td><a href="{project_slug(row["item_name"])}">{html.escape(row["item_name"])}</a></td>'
-            f"<td>{html.escape(row['latest_source_mtime'])}</td>"
-            f"<td>{html.escape(row['last_content_update'])}</td>"
-            f"<td>{status_badge(row['needs_update'])}</td>"
-            "</tr>"
-        )
-    meeting_rows_html = []
-    for row in meetings:
-        meeting_rows_html.append(
-            "<tr>"
-            f"<td>{html.escape(row['item_name'])}</td>"
-            f"<td><code>{html.escape(row['relative_path'])}</code></td>"
-            f"<td>{html.escape(row['latest_source_mtime'])}</td>"
-            f"<td>{html.escape(row['last_content_update'])}</td>"
-            f"<td>{status_badge(row['needs_update'])}</td>"
-            "</tr>"
-        )
-    history_items = "\n".join(
-        "<li>"
-        f"<strong>{html.escape(row['event_time'])}</strong> "
-        f"{html.escape(history_action_label(row['action']))} "
-        f"<code>{html.escape(row['relative_path'])}</code> "
-        f"{html.escape(history_summary_label(row['summary']))}"
-        "</li>"
-        for row in history_rows[-30:]
-    )
+
+    def item_link(row: dict[str, str]) -> str:
+        if row.get("item_type") == "project":
+            return project_slug(row.get("item_name", ""))
+        return repo_href(row.get("relative_path", ""))
+
+    def link_text(row: dict[str, str]) -> str:
+        return "打开项目" if row.get("item_type") == "project" else "打开纪要"
+
+    def source_time_label(row: dict[str, str]) -> str:
+        return "材料修改" if row.get("item_type") == "project" else "纪要修改"
+
+    def source_time_value(row: dict[str, str]) -> str:
+        if row.get("latest_source_mtime"):
+            return display_time(row.get("latest_source_mtime", ""))
+        if row.get("item_type") == "project":
+            return "无额外材料"
+        return "未记录"
+
+    def sync_card(row: dict[str, str]) -> str:
+        title = display_item_name(row)
+        return f"""
+        <article class="sync-card">
+          <div class="sync-card-head">
+            <div>
+              <span class="sync-type">{html.escape(item_type_label(row.get("item_type", "")))}</span>
+              <h3>{html.escape(title)}</h3>
+            </div>
+            {status_badge(row.get("needs_update", ""))}
+          </div>
+          <div class="time-pair">
+            <div class="time-item">
+              <span>{html.escape(source_time_label(row))}</span>
+              <strong>{html.escape(source_time_value(row))}</strong>
+            </div>
+            <div class="time-item">
+              <span>内容同步</span>
+              <strong>{html.escape(display_time(row.get("last_content_update", "")))}</strong>
+            </div>
+          </div>
+          <p class="sync-note">最近扫描：{html.escape(display_time(row.get("last_scanned_at", "")))} · {html.escape(status_text(row.get("needs_update", "")))}</p>
+          <div class="meeting-link-row">
+            <a href="{html.escape(item_link(row))}">{html.escape(link_text(row))}</a>
+          </div>
+        </article>
+        """
+
+    def history_item(row: dict[str, str]) -> str:
+        title = display_item_name(row)
+        href = item_link(row)
+        detail = f'{item_type_label(row.get("item_type", ""))} · {history_action_label(row.get("action", ""))} · {history_summary_label(row.get("summary", ""))}'
+        return f"""
+        <li class="activity-item">
+          <span class="activity-time">{html.escape(compact_display_time(row.get("event_time", "")))}</span>
+          <span class="activity-title">
+            <strong>{html.escape(title)}</strong>
+            <span>{html.escape(detail)}</span>
+          </span>
+          <a class="text-link" href="{html.escape(href)}">查看</a>
+        </li>
+        """
+
+    project_cards = "".join(sync_card(row) for row in projects)
+    meeting_cards = "".join(sync_card(row) for row in meetings)
+    recent_history = list(reversed(history_rows[-20:]))
+    history_items = "".join(history_item(row) for row in recent_history)
+    needs_update = sum(1 for row in status_rows if row.get("needs_update") == "yes")
+    current_items = len(status_rows) - needs_update
+    source_records = sum(1 for row in status_rows if row.get("latest_source_mtime"))
+    latest_scan = max((row.get("last_scanned_at", "") for row in status_rows), default=now)
+
     body = f"""
     <section class="hero">
       <p class="eyebrow">更新时间</p>
-      <h1>项目文件更新时间与刷新记录</h1>
-      <p class="lede">项目材料、项目 README 和会议纪要的更新时间记录如下，用于判断内容是否已经同步。</p>
-      <div class="meta-line">刷新时间：{html.escape(now)}</div>
-    </section>
-
-    <section class="section">
-      <div class="section-head"><div><h2>项目状态</h2><p>材料修改时间与 README 内容更新时间。</p></div></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>项目</th><th>材料最后修改</th><th>内容最后更新</th><th>状态</th></tr></thead>
-          <tbody>{''.join(project_rows_html)}</tbody>
-        </table>
+      <h1>内容同步状态</h1>
+      <p class="lede">这里展示项目页面、项目材料和会议纪要之间的同步状态；路径和原始扫描字段收进链接与更新流水中。</p>
+      <div class="meta-line">最近扫描：{html.escape(display_time(latest_scan))}</div>
+      <div class="update-dashboard">
+        <div class="metric-card"><div class="metric-label">同步记录</div><div class="metric-value">{len(status_rows)}</div></div>
+        <div class="metric-card"><div class="metric-label">已同步</div><div class="metric-value">{current_items}</div></div>
+        <div class="metric-card"><div class="metric-label">需要同步</div><div class="metric-value">{needs_update}</div></div>
+        <div class="metric-card"><div class="metric-label">有材料来源</div><div class="metric-value">{source_records}</div></div>
       </div>
     </section>
 
     <section class="section">
-      <div class="section-head"><div><h2>会议总结</h2><p>只记录 .minutes.md，不记录原始转写 txt。</p></div></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>名称</th><th>路径</th><th>文件最后修改</th><th>内容最后更新</th><th>状态</th></tr></thead>
-          <tbody>{''.join(meeting_rows_html)}</tbody>
-        </table>
+      <div class="section-head">
+        <div>
+          <h2>项目同步</h2>
+          <p>每张卡片比较项目材料最后修改时间和页面内容同步时间。</p>
+        </div>
+      </div>
+      <div class="sync-grid">
+        {project_cards or '<div class="empty">暂无项目同步记录。</div>'}
       </div>
     </section>
 
     <section class="section">
-      <div class="section-head"><div><h2>最近记录</h2><p>最近 30 条内容刷新记录。</p></div></div>
-      <div class="panel"><ol class="number-list">{history_items}</ol></div>
+      <div class="section-head">
+        <div>
+          <h2>会议纪要同步</h2>
+          <p>只展示已归档的 .minutes.md 纪要，原始转写不进入这个视图。</p>
+        </div>
+      </div>
+      <div class="sync-grid meeting-sync-grid">
+        {meeting_cards or '<div class="empty">暂无会议纪要同步记录。</div>'}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>最近同步活动</h2>
+          <p>保留最近 20 条扫描或更新记录，用于追踪页面内容何时被刷新。</p>
+        </div>
+      </div>
+      <ul class="activity-feed">
+        {history_items or '<li class="empty">暂无同步活动。</li>'}
+      </ul>
     </section>
     """
     return page_shell("更新时间", "updates", body)
