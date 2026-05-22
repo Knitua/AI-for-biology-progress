@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026-05-17-条件分子生成论文共读</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <strong>AI for Biology Progress</strong>
+        <span>生物探索团队项目进展</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="index.html">总览</a>
+<a href="projects.html">项目进展</a>
+<a class="active" href="meetings.html">会议记录</a>
+<a href="updates.html">更新时间</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+
+    <section class="hero">
+      <p class="eyebrow">会议纪要</p>
+      <h1>2026-05-17-条件分子生成论文共读</h1>
+      <p class="lede">论文核心不是单纯提出一个新生成器，而是把 drift 定义在 decoder feature space 中。</p>
+      <div class="meta-line">刷新时间：2026-05-22T11:13:39+08:00</div>
+      <div class="meeting-dashboard">
+        <div class="metric-card"><div class="metric-label">会议日期</div><div class="metric-value">17</div></div>
+        <div class="metric-card"><div class="metric-label">状态</div><div class="metric-value">已完成</div></div>
+        <div class="metric-card"><div class="metric-label">关联项目</div><div class="metric-value">P05</div></div>
+        <div class="metric-card"><div class="metric-label">行动项</div><div class="metric-value">6</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>会议定位</h2>
+          <p>05AI-级联催化逆合成 · 2026-05-17</p>
+        </div>
+        <div class="meeting-link-row">
+          <a class="text-link" href="meetings.html">返回会议记录</a>
+          <a class="text-link" href="project-05.html#event-evt-2026-05-17-molgen-meeting">对应项目节点</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section meeting-columns">
+      <article class="action-card">
+        <h3>核心结论</h3>
+        <ol>
+<li>论文核心不是单纯提出一个新生成器，而是把 drift 定义在 decoder feature space 中。 该方法先训练或使用 VAE encoder/decoder，再训练条件 generator 输出 latent z，最后通过 frozen decoder 解码成分子。关键在于 drift 不是直接在外部 feature 或原始 latent 上定义，而是通过 decoder hidden features 与分子结构生成过程耦合。</li>
+<li>decoder-coupled drift 的价值在于提供 pullback gradient。 drift vector 不直接更新分子结构，而是经过固定 decoder 的可微映射被拉回 latent space，从而更新 generator 参数。这样优化方向与 decoder 最终产生分子的方式保持一致，解释了为什么直接在 detached feature、外部 feature 或普通 latent space 中做 drift 效果可能较弱。</li>
+<li>外部 feature/proxy metric 的效果可能不如 decoder 内部特征。 会议中提到，如果用外部编码器、分类器、打分器或手工 proxy metric 构造回归任务，优化目标可能与最终分子解码过程脱节。decoder feature 更接近实际生成机制，因此更适合作为 drift 和局部度量的空间。</li>
+<li>多样性项用于缓解 collapse。 如果只按目标性质或 drift 聚合生成，模型可能收缩到少数性能不错但重复的分子。论文中的 z-diversity 或类似 repulsion/hinge 项用于把 latent samples 拉开，从而提升唯一性和多样性。</li>
+<li>低推理成本来自两阶段构造。 由于 decoder frozen，generator 可单步输出 latent z，再直接 decode 成分子；推理时不需要 denoising、ODE solver 或 iterative refinement。这是该方法相较部分 diffusion/flow 方法的重要工程优势。</li>
+<li>该论文更适合作为机制参考，而不是直接照搬。 会议中对数学推导和实验 protocol 进行了初步拆解，但部分术语和公式仍需回看原文确认。对团队而言，更有价值的是借鉴“生成空间应与解码器/最终结构空间耦合”的思想。</li>
+</ol>
+      </article>
+      <article class="action-card">
+        <h3>可行方向</h3>
+        <ol>
+<li>复现论文机制图和两阶段 pipeline。 输入是论文方法部分和图 1；整理 VAE encoder/decoder、generator、condition、latent z、decoder feature、drift loss 之间的关系。输出一张可讲解的方法流程图。验证方式是团队内部能否用该图讲清楚每个模块的训练和推理过程。</li>
+<li>整理 ablation 表。 输入是论文实验部分；提取 decoder-coupled drift、external feature、detached feature、z-diversity、cfg 等设置。输出一张“设置-作用-结果-解释”的表。验证方式是看 ablation 是否能支持“decoder coupling 是关键”的主张。</li>
+<li>借鉴 decoder feature space 设计团队自己的生成/评估模块。 输入是已有分子生成或路线评估模型的 latent/hidden states；方法是比较外部 property predictor feature 与模型内部 decoder/intermediate feature 的可用性。输出是一个候选 feature space 选择方案。验证方式是看该 feature 是否更能预测最终结构合法性、性质和多样性。</li>
+<li>检查多样性正则项在团队任务中的必要性。 输入是同一条件下多次生成的分子或路线；方法是计算重复率、唯一性、结构相似度或路线相似度。输出是是否需要 repulsion/diversity loss 的判断。验证方式是比较加入前后的唯一性和目标性质保持情况。</li>
+</ol>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>下一步行动</h2>
+          <p>从会议纪要中整理出的后续推进事项。</p>
+        </div>
+      </div>
+      <div class="action-card">
+        <ul>
+<li>[ ] 待指定：回查论文原文，确认方法名称、数据集规模、指标和缩写。</li>
+<li>[ ] 待指定：画出两阶段 pipeline，包括 VAE、generator、condition、drift field、decoder feature 和 final molecule。</li>
+<li>[ ] 待指定：整理 Proposition 1 及相关理论命题，用一句话解释每个命题服务于什么论点。</li>
+<li>[ ] 待指定：做一张 ablation 表，对比 decoder feature、external feature、detached feature、z-diversity 等设置。</li>
+<li>[ ] 待指定：评估该机制是否能迁移到团队已有的分子生成或级联路线评估任务。</li>
+<li>[ ] 待指定：把论文共读内容整理成 1 页组会材料。</li>
+</ul>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026-05-21-蝙蝠基因组分析复现与网页展示讨论</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <strong>AI for Biology Progress</strong>
+        <span>生物探索团队项目进展</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="index.html">总览</a>
+<a href="projects.html">项目进展</a>
+<a class="active" href="meetings.html">会议记录</a>
+<a href="updates.html">更新时间</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+
+    <section class="hero">
+      <p class="eyebrow">会议纪要</p>
+      <h1>2026-05-21-蝙蝠基因组分析复现与网页展示讨论</h1>
+      <p class="lede">直接 embedding 全部物种和候选基因，暂时不能支撑明确的蝙蝠特异性结论。</p>
+      <div class="meta-line">刷新时间：2026-05-22T11:13:39+08:00</div>
+      <div class="meeting-dashboard">
+        <div class="metric-card"><div class="metric-label">会议日期</div><div class="metric-value">21</div></div>
+        <div class="metric-card"><div class="metric-label">状态</div><div class="metric-value">已完成</div></div>
+        <div class="metric-card"><div class="metric-label">关联项目</div><div class="metric-value">P01</div></div>
+        <div class="metric-card"><div class="metric-label">行动项</div><div class="metric-value">6</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>会议定位</h2>
+          <p>01AI-BAT · 2026-05-21</p>
+        </div>
+        <div class="meeting-link-row">
+          <a class="text-link" href="meetings.html">返回会议记录</a>
+          <a class="text-link" href="project-01.html#event-evt-2026-05-21-bat-genome-sync">对应项目节点</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section meeting-columns">
+      <article class="action-card">
+        <h3>核心结论</h3>
+        <ol>
+<li>直接 embedding 全部物种和候选基因，暂时不能支撑明确的蝙蝠特异性结论。 当前结果中，免疫相关基因在不同物种里本来就可能和其他基因分开；这种分离更像功能类别差异，而不一定是蝙蝠相对其他哺乳动物的特异性。把大量蝙蝠、对照物种和多个蛋白混在同一张图里，也会掩盖单一物种或单一蛋白的局部趋势。</li>
+<li>参考文献中的进化树/同源基因分支分析仍是更稳妥的主线。 会议讨论了先识别同源基因、构建物种进化树，再沿祖先到子节点的分支观察基因或蛋白变化，并对突变较集中的基因做功能注释的路线。该流程更接近比较基因组领域可接受的分析范式，也更容易把结果连接到免疫通路和病毒耐受机制。</li>
+<li>当前复现效果不佳，主要瓶颈可能在同源基因规模、建树规模和流程简化造成的误差积累。 已尝试的小规模树、较少同源基因和简化比对流程，未能稳定复现参考文献中免疫相关基因富集的效果。后续不应急于基于小规模结果下结论，而应优先把参考流程做完整、做大、做可复核。</li>
+<li>数据优势集中在蝙蝠物种和高质量注释子集上，需要先把数据边界讲清楚。 会议中提到已下载约 28 个有基因/蛋白注释的蝙蝠物种，以及 100 多个哺乳动物对照物种；其中蝙蝠数据存在质量分组差异。后续结果展示需要明确哪些是高质量数据、哪些是对照物种、哪些是来自 Bat1K 或参考文献相关数据。</li>
+<li>现有 embedding 图仍值得拆分重画，但要改成可解释的对照视图。 不建议继续只看一张混合散点图。更可行的是每个蛋白单独出图、每个蝙蝠物种分别与所有对照物种比较，并清楚标注颜色和符号代表的物种、蛋白或 control family。这样更容易观察某些蝙蝠物种是否在特定蛋白上形成离群或聚集趋势。</li>
+<li>BAT 项目成果展示应改为网页，而不是 PPT。 会议明确后续给老师看的材料优先做成 GitHub Pages/HTML 页面，把建树结果、embedding 图、物种对照和候选基因解释放在可点击的网页中。网页比 PPT 更适合承载多图、多物种、多层级结果，也更符合当前项目网站的展示方式。</li>
+</ol>
+      </article>
+      <article class="action-card">
+        <h3>可行方向</h3>
+        <ol>
+<li>严格复现参考文献的比较基因组流程。 输入是已注释的蝙蝠和哺乳动物基因组/蛋白数据；方法是按参考文献流程做同源基因识别、物种树构建、分支变化分析和功能富集。输出应包括可复核的物种树、候选基因列表、富集通路和关键图。验证方式是看是否能复现参考文献中免疫相关基因在蝙蝠分支上的富集趋势。</li>
+<li>重构 embedding 可视化。 输入是已有 ESM/Evo embedding 和候选免疫基因/蛋白清单；方法是按单蛋白、单蝙蝠物种、蝙蝠分组和对照物种分别出图。输出是一组可点击的散点图或图表页面。验证方式是每张图都能说明颜色、形状、物种和蛋白含义，并能回答是否存在蝙蝠离群或聚集趋势。</li>
+<li>收敛候选免疫基因/蛋白解释链条。 输入是已知免疫、病毒进入、炎症调控或病毒耐受相关候选基因；方法是比较不同物种中的序列差异、蛋白片段变化、embedding 距离和功能注释。输出是“候选基因-功能-蝙蝠差异-证据图”的小表。验证方式是每个候选都能落到一个可解释的生物学问题，而不是只呈现抽象点云。</li>
+<li>建立 BAT 项目 HTML 展示仓库。 输入是建树结果、embedding 图、物种清单和候选基因解释；方法是在 GitHub 上建立 BAT/BET 展示仓库，并用 GitHub Pages 发布。输出是一个可给老师直接浏览的网页。验证方式是网页能按项目问题、数据来源、分析流程、关键图和下一步组织内容。</li>
+</ol>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>下一步行动</h2>
+          <p>从会议纪要中整理出的后续推进事项。</p>
+        </div>
+      </div>
+      <div class="action-card">
+        <ul>
+<li>[ ] 李奕均：按参考文献流程优先复现蝙蝠相关数据的同源基因建树、分支分析和功能富集结果。</li>
+<li>[ ] 李奕均：整理 28 个蝙蝠物种、100 多个哺乳动物对照物种、13+15 质量分组和注释来源清单。</li>
+<li>[ ] 李奕均：回查现有 embedding 图的绘图脚本或数据表，确认 control family 包含哪些动物、每个点对应哪些蛋白或物种。</li>
+<li>[ ] 李奕均：重画 embedding 图，至少包含“每个蛋白一张图”和“所有对照物种 vs 单一蝙蝠物种”的视图。</li>
+<li>[ ] 邱江杰/李奕均：在 GitHub 上建立 BAT/BET 展示仓库，并制作包含各分析图表的 HTML/GitHub Pages 页面。</li>
+<li>[ ] 待指定：比较 ESM 与 Evo embedding 在候选免疫蛋白上的可解释性，决定是否保留为辅助分析。</li>
+</ul>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

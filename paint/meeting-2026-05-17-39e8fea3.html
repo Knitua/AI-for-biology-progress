@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026-05-17-级联反应路径规划讨论</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <strong>AI for Biology Progress</strong>
+        <span>生物探索团队项目进展</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="index.html">总览</a>
+<a href="projects.html">项目进展</a>
+<a class="active" href="meetings.html">会议记录</a>
+<a href="updates.html">更新时间</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+
+    <section class="hero">
+      <p class="eyebrow">会议纪要</p>
+      <h1>2026-05-17-级联反应路径规划讨论</h1>
+      <p class="lede">单步逐步搜索不适合级联反应规划。</p>
+      <div class="meta-line">刷新时间：2026-05-22T11:13:39+08:00</div>
+      <div class="meeting-dashboard">
+        <div class="metric-card"><div class="metric-label">会议日期</div><div class="metric-value">17</div></div>
+        <div class="metric-card"><div class="metric-label">状态</div><div class="metric-value">已完成</div></div>
+        <div class="metric-card"><div class="metric-label">关联项目</div><div class="metric-value">P05</div></div>
+        <div class="metric-card"><div class="metric-label">行动项</div><div class="metric-value">6</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>会议定位</h2>
+          <p>05AI-级联催化逆合成 · 2026-05-17</p>
+        </div>
+        <div class="meeting-link-row">
+          <a class="text-link" href="meetings.html">返回会议记录</a>
+          <a class="text-link" href="project-05.html#event-evt-2026-05-17-cascade-meeting">对应项目节点</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section meeting-columns">
+      <article class="action-card">
+        <h3>核心结论</h3>
+        <ol>
+<li>单步逐步搜索不适合级联反应规划。 如果每一步都独立生成多个候选反应类型，很容易出现第三步 output 无法作为第四步 input、上下步条件不兼容等问题。对项目推进而言，不能把任务简单拆成“每一步预测一个反应”，而要把整条路径作为对象评估。</li>
+<li>级联规划必须具有全局路径视角。 会议中反复强调，模型需要在反应开始时就看到整条路线大概有多少步、哪些步骤可能合并、哪些条件需要统一。否则模型只能局部判断当前 action 是否合理，无法判断其对后续步骤的影响。</li>
+<li>当前数据规模不足以支撑直接训练一个强级联规划模型。 只依赖现有几千条级联数据去训练或微调，容易得到不可靠的“骨架”或路线。后续应避免把主线押在从小数据中直接学出完整规划能力上。</li>
+<li>小模型微调和蒸馏路线需要谨慎。 讨论中提到 LLaMA 3.1、小模型控制、on-policy distillation 等方向，但大家对“小模型能否复制顶级大模型输出”和“微调用什么任务才有意义”持保留态度。短期更现实的是借助强 API 或现成模型做评估与选择。</li>
+<li>更可行的方案是“已有路线评估 + 级联修饰”。 让已有 planner 或组内模型先生成 top 100 路线，再判断哪些路线可改造成级联，哪些步骤可缩短，哪些条件可通过更换催化剂、酶或反应条件进行合并。这比从零生成级联路线更稳，也更容易验证。</li>
+<li>不建议强行向 auto planner 注入高权重人工候选。 如果不给人工候选很高权重，planner 可能选不到；如果强行给高权重，又可能破坏原有规划逻辑。因此这条路更像临时补丁，不适合作为主线方法。</li>
+</ol>
+      </article>
+      <article class="action-card">
+        <h3>可行方向</h3>
+        <ol>
+<li>候选路线级联可行性评估器。 输入是已有 planner 给出的多条候选合成路线；模型判断每条路线是否可能改造成级联路线，输出可级联概率、关键限制步骤和不兼容原因。验证方式是用人工标注或 cascade test set 检查排序与判断准确性。</li>
+<li>路线缩短与节点合并。 输入是一条多步路线及每步反应类型、底物/产物、条件；模型识别可合并的相邻步骤或节点，输出缩短后的路线和修改理由。验证方式是检查合并后上下步物质连接、条件兼容性和化学合理性。</li>
+<li>条件统一与规避建议。 输入是路线中各步温度、催化剂、酶、溶剂等条件；模型判断哪些步骤条件冲突、哪些条件可替换或统一，输出建议的条件调整方案。验证方式是由有机/催化背景成员复核。</li>
+<li>强模型辅助的候选选择。 输入为每一步或每条路线的候选集合；LLM 根据全局路径上下文选择较优候选，而不是只看局部反应。验证方式是比较有无全局上下文时的路线连贯性和可执行性。</li>
+</ol>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>下一步行动</h2>
+          <p>从会议纪要中整理出的后续推进事项。</p>
+        </div>
+      </div>
+      <div class="action-card">
+        <ul>
+<li>[ ] 待指定：整理一批 cascade/test set 路线，作为级联可行性评估的验证集。</li>
+<li>[ ] 待指定：选取已有 planner 输出的 top 100 路线，人工标注哪些可改造成级联。</li>
+<li>[ ] 待指定：定义路线级字段，包括步数、每步反应类型、上下步连接、条件、催化剂/酶、可合并节点。</li>
+<li>[ ] 待指定：设计 LLM 评估 prompt，让模型输出“可级联/不可级联/需修改/不确定”及理由。</li>
+<li>[ ] 待指定：查清已有工作中 LLaMA 3.1 或 LLM 控制模块的实际作用，区分公开版本和网站服务版本。</li>
+<li>[ ] 待指定：先做小规模案例验证，再决定是否进入模型微调或蒸馏路线。</li>
+</ul>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

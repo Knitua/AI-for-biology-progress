@@ -1,5 +1,6 @@
 import csv
 import calendar
+import hashlib
 import html
 import re
 from datetime import datetime
@@ -1708,6 +1709,14 @@ def project_slug(item_name: str) -> str:
     return f"project-{project_number(item_name)}.html"
 
 
+def meeting_slug(item_name: str) -> str:
+    clean_name = item_name.removesuffix(".minutes.md")
+    match = re.match(r"(\d{4}-\d{2}-\d{2})", clean_name)
+    date_part = match.group(1) if match else "undated"
+    digest = hashlib.sha1(item_name.encode("utf-8")).hexdigest()[:8]
+    return f"meeting-{date_part}-{digest}.html"
+
+
 def read_markdown_title(text: str, fallback: str) -> str:
     for line in text.splitlines():
         if line.startswith("# "):
@@ -1910,7 +1919,8 @@ def build_meetings(status_rows: list[dict[str, str]]) -> list[dict[str, object]]
                 "row": row,
                 "title": title,
                 "sections": sections,
-                "href": repo_href(row["relative_path"]),
+                "href": meeting_slug(row["item_name"]),
+                "source_href": repo_href(row["relative_path"]),
             }
         )
     return meetings
@@ -2002,6 +2012,19 @@ def build_events(projects: list[dict[str, object]]) -> list[dict[str, object]]:
 
 def project_events(events: list[dict[str, object]], project_name: str) -> list[dict[str, object]]:
     return [event for event in events if event.get("project_id") == project_name]
+
+
+def attach_meeting_pages_to_events(events: list[dict[str, object]], meetings: list[dict[str, object]]) -> None:
+    page_by_source = {
+        normalize_relative_path(str(meeting["row"].get("relative_path", ""))): str(meeting.get("href", ""))
+        for meeting in meetings
+    }
+    for event in events:
+        if event.get("event_type") != "meeting":
+            continue
+        source_path = normalize_relative_path(str(event.get("source_path", "")))
+        if source_path in page_by_source:
+            event["meeting_href"] = page_by_source[source_path]
 
 
 def meeting_date_from_title(title: str) -> str:
@@ -2589,7 +2612,9 @@ def render_projects_page(projects: list[dict[str, object]], now: str) -> str:
 
 def render_event_card(event: dict[str, object]) -> str:
     source_link = ""
-    if event.get("source_href"):
+    if event.get("meeting_href"):
+        source_link = f'<a href="{html.escape(str(event["meeting_href"]))}">会议页</a>'
+    elif event.get("event_type") != "meeting" and event.get("source_href"):
         source_link = f'<a href="{html.escape(str(event["source_href"]))}">来源记录</a>'
     return f"""
     <article class="event-card {html.escape(str(event["status"]))} {html.escape(str(event["event_type"]))}" id="{html.escape(str(event["anchor"]))}">
@@ -2721,8 +2746,8 @@ def render_project_page(project: dict[str, object], now: str, events: list[dict[
 
 def render_meeting_node_card(event: dict[str, object]) -> str:
     source_link = ""
-    if event.get("source_href"):
-        source_link = f'<a href="{html.escape(str(event["source_href"]))}">会议纪要</a>'
+    if event.get("meeting_href"):
+        source_link = f'<a href="{html.escape(str(event["meeting_href"]))}">会议页</a>'
     return f"""
     <article class="meeting-brief-card meeting-node-card {html.escape(str(event.get("status", "")))}">
       <div class="meeting-tagline">
@@ -2775,7 +2800,7 @@ def render_meetings_page(meetings: list[dict[str, object]], events: list[dict[st
               <p>{html.escape(first_line)}</p>
               <div class="meeting-link-row">
                 {project_node_link}
-                <a href="{html.escape(str(meeting["href"]))}">会议纪要</a>
+                <a href="{html.escape(str(meeting["href"]))}">会议页</a>
               </div>
             </article>
             """
@@ -2801,7 +2826,7 @@ def render_meetings_page(meetings: list[dict[str, object]], events: list[dict[st
                 </div>
               </summary>
               <div class="meeting-detail-body">
-                <p class="meta-line">文件：<a href="{html.escape(str(meeting["href"]))}">{html.escape(str(meeting["row"]["relative_path"]))}</a></p>
+                <p class="meta-line"><a href="{html.escape(str(meeting["href"]))}">独立会议页</a></p>
                 <div class="meeting-columns">
                   <section>
                     <h3>核心结论</h3>
@@ -2920,6 +2945,71 @@ def render_meetings_page(meetings: list[dict[str, object]], events: list[dict[st
     return page_shell("会议记录", "meetings", body)
 
 
+def render_meeting_page(meeting: dict[str, object], events: list[dict[str, object]], now: str) -> str:
+    sections: dict[str, str] = meeting["sections"]  # type: ignore[assignment]
+    linked_event = meeting_event_for(meeting, events)
+    meeting_date = str(linked_event.get("date", "")) if linked_event else meeting_date_from_title(str(meeting["title"]))
+    project_title = str(linked_event.get("project_title", "未绑定项目节点")) if linked_event else "未绑定项目节点"
+    project_link = str(linked_event.get("href", "")) if linked_event else ""
+    status_label = event_status_label(str(linked_event.get("status", ""))) if linked_event else "已归档"
+    core_items = markdown_list_items(sections.get("核心结论", ""), 2)
+    action_count = len(markdown_list_items(sections.get("下一步行动", ""), 100))
+    lede = core_items[0] if core_items else "会议纪要已整理为核心结论、可行方向和下一步行动。"
+    project_link_html = f'<a class="text-link" href="{html.escape(project_link)}">对应项目节点</a>' if project_link else ""
+
+    body = f"""
+    <section class="hero">
+      <p class="eyebrow">会议纪要</p>
+      <h1>{html.escape(str(meeting["title"]))}</h1>
+      <p class="lede">{html.escape(lede)}</p>
+      <div class="meta-line">刷新时间：{html.escape(now)}</div>
+      <div class="meeting-dashboard">
+        <div class="metric-card"><div class="metric-label">会议日期</div><div class="metric-value">{html.escape(meeting_date[-2:] if meeting_date else "--")}</div></div>
+        <div class="metric-card"><div class="metric-label">状态</div><div class="metric-value">{html.escape(status_label)}</div></div>
+        <div class="metric-card"><div class="metric-label">关联项目</div><div class="metric-value">{html.escape(str(linked_event.get("project_code", "项目") if linked_event else "--"))}</div></div>
+        <div class="metric-card"><div class="metric-label">行动项</div><div class="metric-value">{action_count}</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>会议定位</h2>
+          <p>{html.escape(project_title)} · {html.escape(meeting_date or "日期待补")}</p>
+        </div>
+        <div class="meeting-link-row">
+          <a class="text-link" href="meetings.html">返回会议记录</a>
+          {project_link_html}
+        </div>
+      </div>
+    </section>
+
+    <section class="section meeting-columns">
+      <article class="action-card">
+        <h3>核心结论</h3>
+        {markdown_to_html(sections.get("核心结论", "暂无核心结论。"))}
+      </article>
+      <article class="action-card">
+        <h3>可行方向</h3>
+        {markdown_to_html(sections.get("可行方向", "暂无可行方向。"))}
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>下一步行动</h2>
+          <p>从会议纪要中整理出的后续推进事项。</p>
+        </div>
+      </div>
+      <div class="action-card">
+        {markdown_to_html(sections.get("下一步行动", "暂无下一步行动。"))}
+      </div>
+    </section>
+    """
+    return page_shell(str(meeting["title"]), "meetings", body)
+
+
 def render_updates_page(status_rows: list[dict[str, str]], history_rows: list[dict[str, str]], now: str) -> str:
     projects = [row for row in status_rows if row["item_type"] == "project"]
     meetings = [row for row in status_rows if row["item_type"] == "meeting_minutes"]
@@ -2927,7 +3017,7 @@ def render_updates_page(status_rows: list[dict[str, str]], history_rows: list[di
     def item_link(row: dict[str, str]) -> str:
         if row.get("item_type") == "project":
             return project_slug(row.get("item_name", ""))
-        return repo_href(row.get("relative_path", ""))
+        return meeting_slug(row.get("item_name", ""))
 
     def link_text(row: dict[str, str]) -> str:
         return "打开项目" if row.get("item_type") == "project" else "打开纪要"
@@ -3069,6 +3159,7 @@ def main() -> None:
     projects = build_projects(status_rows, read_project_meta())
     meetings = build_meetings(status_rows)
     events = build_events(projects)
+    attach_meeting_pages_to_events(events, meetings)
 
     write_generated(CSS_PATH, STYLE_CSS)
     write_generated(HTML_PATH, render_home(projects, meetings, status_rows, events, now))
@@ -3077,6 +3168,8 @@ def main() -> None:
     write_generated(PAINT_DIR / "updates.html", render_updates_page(status_rows, history_rows, now))
     for project in projects:
         write_generated(PAINT_DIR / str(project["slug"]), render_project_page(project, now, events))
+    for meeting in meetings:
+        write_generated(PAINT_DIR / str(meeting["href"]), render_meeting_page(meeting, events, now))
 
     generated = [
         STATUS_PATH,
@@ -3085,7 +3178,7 @@ def main() -> None:
         PAINT_DIR / "meetings.html",
         PAINT_DIR / "updates.html",
         CSS_PATH,
-    ] + [PAINT_DIR / str(project["slug"]) for project in projects]
+    ] + [PAINT_DIR / str(project["slug"]) for project in projects] + [PAINT_DIR / str(meeting["href"]) for meeting in meetings]
     for path in generated:
         print(str(path.relative_to(TEACHER_DIR.parent)).replace("/", "\\"))
 

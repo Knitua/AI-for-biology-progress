@@ -1,6 +1,7 @@
 event_id,project_id,date,event_type,status,title,summary,source_path
 evt-2026-05-11-drug-screen,02AI-老药新用,2026-05-11,milestone,done,老药新用筛选报告完成,"完成 915 个 FDA 小分子 x 1000 个人类蛋白靶点的筛选，并形成 Top1000 结构增强结果。",02AI-老药新用\README.md
 evt-2026-05-17-bat-plan,01AI-BAT,2026-05-17,milestone,done,BAT 试点路线收敛,"完成蝙蝠物种资源统计和第一版 protein/CDS 序列表征试点路线。",01AI-BAT\README.md
+evt-2026-05-21-bat-genome-sync,01AI-BAT,2026-05-21,meeting,done,蝙蝠基因组分析复现与网页展示讨论,"明确先复现参考文献流程，同时深挖现有 embedding 图表并用 HTML/GitHub Pages 展示结果。",Meet_content\2026-05-21-蝙蝠基因组分析复现与网页展示讨论.minutes.md
 evt-2026-05-17-molgen-meeting,05AI-级联催化逆合成,2026-05-17,meeting,done,条件分子生成论文共读,"形成 decoder-coupled drift、pullback gradient 和多样性控制等机制共识。",Meet_content\2026-05-17-条件分子生成论文共读.minutes.md
 evt-2026-05-17-cascade-meeting,05AI-级联催化逆合成,2026-05-17,meeting,done,级联反应路径规划讨论,"明确路线级评估与级联修饰优先于从零训练完整级联规划模型。",Meet_content\2026-05-17-级联反应路径规划讨论.minutes.md
 evt-2026-05-17-afp-pipeline,07AI-抗冻肽,2026-05-17,milestone,done,抗冻肽预测生成流程成型,"完成预测器、生成器、候选筛选和 motif 挖掘流程，湿实验正在推进。",07AI-抗冻肽\README.md
