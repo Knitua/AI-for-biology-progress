@@ -2223,6 +2223,7 @@ def render_calendar_event(event: dict[str, object]) -> str:
     status_label = event_status_label(str(event["status"]))
     project_title = str(event["project_title"])
     title = str(event["title"])
+    href = str(event.get("meeting_href") or event.get("href", ""))
     access_label = f'{event.get("date", "")} {title}，{project_title}，{type_label}，{status_label}'
     class_tokens = " ".join(
         html.escape(str(token))
@@ -2235,7 +2236,7 @@ def render_calendar_event(event: dict[str, object]) -> str:
         if str(token)
     )
     return f"""
-    <a class="{class_tokens}" href="{html.escape(str(event["href"]))}" title="{html.escape(access_label)}" aria-label="{html.escape(access_label)}">
+    <a class="{class_tokens}" href="{html.escape(href)}" title="{html.escape(access_label)}" aria-label="{html.escape(access_label)}">
       <span class="calendar-event-content">
         <span class="calendar-event-meta">
           <span class="project-pill">{html.escape(str(event.get("project_code", "项目")))}</span>
@@ -2437,15 +2438,20 @@ def render_home(projects: list[dict[str, object]], meetings: list[dict[str, obje
     stalled = [p for p in projects if p["meta"].get("tier") == "待启动/支撑方向"]
 
     featured_cards = "\n".join(project_card(project) for project in featured)
+    recent_meetings = sorted(
+        meetings,
+        key=lambda meeting: meeting_date_from_title(str(meeting["title"])) or "0000-00-00",
+        reverse=True,
+    )[:3]
     meeting_cards = "\n".join(
         f"""
         <article class="insight-card">
           <h3>{html.escape(str(meeting["title"]))}</h3>
           {markdown_to_html(str(meeting["sections"].get("一句话概括", "暂无摘要。")))}
-          <p><a class="text-link" href="meetings.html">查看会议记录</a></p>
+          <p><a class="text-link" href="{html.escape(str(meeting["href"]))}">查看会议页</a></p>
         </article>
         """
-        for meeting in meetings[:2]
+        for meeting in recent_meetings
     )
 
     body = f"""
@@ -2529,7 +2535,7 @@ def render_home(projects: list[dict[str, object]], meetings: list[dict[str, obje
       <div class="section-head">
         <div>
           <h2>近期讨论</h2>
-          <p>近期讨论沉淀出分子生成机制理解和级联反应路径规划两条后续任务。</p>
+          <p>近期会议按日期同步到会议页，并回连到对应项目节点。</p>
         </div>
         <a class="text-link" href="meetings.html">会议记录</a>
       </div>
